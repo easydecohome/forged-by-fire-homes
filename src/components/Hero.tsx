@@ -1,143 +1,53 @@
-import { useEffect, useState } from 'react'
+import React from 'react';
+import { Button } from './ui/button';
+import { StatsBar } from './StatsBar';
 
-export default function Hero() {
-  const [loaded, setLoaded] = useState(false)
-
-  useEffect(() => {
-    const t = setTimeout(() => setLoaded(true), 100)
-    return () => clearTimeout(t)
-  }, [])
-
+export const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background image */}
-      <div className="absolute inset-0">
+    <section className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden">
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1800&q=85&auto=format"
-          alt="Dramatic Australian mountain landscape"
-          className="w-full h-full object-cover"
+          src="https://images.unsplash.com/photo-1568659585069-facb248c4935?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=80"
+          alt="Architectural Shou Sugi Ban Cabin Exterior"
+          className="w-full h-full object-cover grayscale opacity-40 transition-all duration-1000 group-hover:scale-110"
         />
-        {/* Multi-layer overlay for depth */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(to right, hsl(17 14% 6% / 0.97) 0%, hsl(17 14% 6% / 0.80) 55%, hsl(17 14% 6% / 0.45) 100%)',
-          }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(to top, hsl(17 14% 6%) 0%, transparent 55%)',
-          }}
-        />
-        {/* Fire ember glow at base */}
-        <div
-          className="absolute bottom-0 left-0 right-0 h-48"
-          style={{
-            background: 'linear-gradient(to top, hsl(21 91% 41% / 0.08), transparent)',
-          }}
-        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/40 to-background z-10"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(217,119,6,0.05)_0,transparent_70%)] z-10"></div>
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full pt-28 pb-24">
-        <div className="max-w-3xl">
-          {/* Tag */}
-          <div
-            className={`inline-flex items-center gap-2 mb-6 transition-all duration-700 ${
-              loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-            style={{ transitionDelay: '0.1s' }}
-          >
-            <span className="w-6 h-px bg-accent" />
-            <span className="text-accent text-xs font-medium tracking-[0.3em] uppercase">
-              Australian Tiny Home Builders
-            </span>
-          </div>
+      <div className="container mx-auto px-6 relative z-20 pt-20 flex flex-col items-center text-center">
+        <div className="inline-flex items-center gap-3 mb-8 reveal animate-fade-in">
+          <div className="h-[1px] w-8 bg-primary"></div>
+          <span className="text-primary tracking-widest uppercase text-xs font-bold leading-none">Crafted in Australia</span>
+          <div className="h-[1px] w-8 bg-primary"></div>
+        </div>
 
-          {/* Headline */}
-          <h1
-            className={`font-serif text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6 transition-all duration-700 ${
-              loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}
-            style={{ transitionDelay: '0.25s' }}
-          >
-            Born of fire.
-            <br />
-            <span className="fire-text">Built to last</span>
-            <br />
-            a lifetime.
-          </h1>
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-foreground tracking-tight leading-[0.9] mb-8 max-w-5xl reveal reveal-delay-1">
+          Where fire meets <span className="fire-text italic">timber.</span> <br />
+          Where craft becomes home.
+        </h1>
 
-          {/* Sub */}
-          <p
-            className={`text-lg lg:text-xl text-muted-foreground max-w-xl leading-relaxed mb-10 transition-all duration-700 ${
-              loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-            style={{ transitionDelay: '0.4s' }}
-          >
-            We craft architectural tiny homes clad in authentic fire-charred timber — the ancient
-            Japanese art of Shou Sugi Ban. Bespoke commissions, delivered anywhere in Australia.
-          </p>
+        <p className="text-lg md:text-xl text-foreground/70 max-w-2xl font-sans mb-12 reveal reveal-delay-2 leading-relaxed">
+          Forged by Fire builds architectural cabins clad in authentic Shou Sugi Ban — the ancient Japanese art of charring timber into a surface of extraordinary beauty, resilience, and character. Crafted for Australia's most discerning landscapes.
+        </p>
 
-          {/* CTAs */}
-          <div
-            className={`flex flex-col sm:flex-row gap-4 mb-14 transition-all duration-700 ${
-              loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-            style={{ transitionDelay: '0.55s' }}
-          >
-            <a
-              href="#contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-white rounded-sm transition-all duration-200 hover:brightness-110 hover:scale-[1.02] active:scale-[0.98]"
-              style={{ background: 'linear-gradient(135deg, hsl(21 91% 41%), hsl(33 71% 27%))' }}
-            >
-              Commission Your Home
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path
-                  d="M3 8h10M9 4l4 4-4 4"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </a>
-            <a
-              href="#models"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-medium text-foreground border border-border/60 rounded-sm transition-all duration-200 hover:border-accent/50 hover:text-accent"
-            >
-              View Our Homes
-            </a>
-          </div>
-
-          {/* Trust badges */}
-          <div
-            className={`flex flex-wrap gap-x-6 gap-y-3 transition-all duration-700 ${
-              loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-            style={{ transitionDelay: '0.7s' }}
-          >
-            {[
-              { icon: '🔥', label: '100% Authentic Shou Sugi Ban' },
-              { icon: '🇦🇺', label: 'Australian Owned & Built' },
-              { icon: '⭐', label: '10-Year Structural Warranty' },
-            ].map((b) => (
-              <div key={b.label} className="flex items-center gap-2 text-sm text-muted-foreground">
-                <span className="text-base">{b.icon}</span>
-                <span>{b.label}</span>
-              </div>
-            ))}
-          </div>
+        <div className="flex flex-col sm:flex-row items-center gap-6 mb-20 reveal reveal-delay-3">
+          <Button size="lg" className="px-10 py-7 text-lg bg-primary hover:bg-primary/90 text-white border-none transition-all duration-500 hover:scale-105 fire-glow">
+            View Our Sanctuaries
+          </Button>
+          <Button size="lg" variant="outline" className="px-10 py-7 text-lg border-white/20 text-white hover:bg-white/10 backdrop-blur-sm transition-all duration-500">
+            The Material Story
+          </Button>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 hidden sm:flex">
-        <span className="text-xs text-muted-foreground tracking-widest uppercase">Scroll</span>
-        <div className="w-px h-12 bg-gradient-to-b from-accent/60 to-transparent" />
+      <div className="w-full max-w-6xl mx-auto px-6 mb-12 reveal reveal-delay-4">
+        <StatsBar />
       </div>
+
+      {/* Fire glow accent bottom */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
     </section>
-  )
-}
+  );
+};

@@ -1,157 +1,99 @@
-import { useEffect, useRef } from 'react'
+import React from 'react';
 
-const qualities = [
-  {
-    title: 'Born of Fire',
-    description:
-      'Shou Sugi Ban — 焼き杉 — is a 300-year-old Japanese technique of slowly charring timber with controlled flame. The surface blackens, crystallises, and transforms into something entirely new: a skin of carbonised beauty.',
-  },
-  {
-    title: 'Resilience as Aesthetic',
-    description:
-      "The charring creates a natural barrier against moisture, termites, UV degradation, and fire itself. In Australia's harsh climate — from tropical north to alpine south — this is not just beautiful. It is engineered longevity.",
-  },
-  {
-    title: 'Ages Backwards',
-    description:
-      'Where standard cladding fades and fails, Shou Sugi Ban matures. Silver highlights emerge over decades. The grain deepens. Time does not diminish it — it refines it. A home that becomes more distinguished each year.',
-  },
-  {
-    title: 'Sustainable by Nature',
-    description:
-      'No toxic preservatives. No synthetic coatings. The preservation is the fire itself — a closed-loop process that extends timber life by 75+ years. Premium quality without compromise to the land.',
-  },
-]
+export const Craft = () => {
+  const philosophies = [
+    {
+      title: 'Born of Fire',
+      description: 'Shou Sugi Ban — 焼き杉 — is a 300-year-old Japanese technique of slowly charring timber with controlled flame. The surface blackens, crystallises, and transforms into something entirely new: a skin of carbonised beauty.',
+    },
+    {
+      title: 'Resilience as Aesthetic',
+      description: 'The charring process creates a natural barrier against moisture, insects, UV degradation, and fire. In Australia\'s harsh landscapes, this is not just beautiful — it is engineered longevity without chemicals.',
+    },
+    {
+      title: 'Ages Backwards',
+      description: 'Where standard cladding fades and fails, Shou Sugi Ban matures. Silver highlights emerge over decades. The grain deepens. Time does not diminish it — it refines it. A home that becomes more distinguished with each passing year.',
+    },
+    {
+      title: 'Sustainable by Nature',
+      description: 'No toxic preservatives, no synthetic coatings. The preservation is the fire itself — a closed-loop process that extends the life of natural timber by 75 years or more. Luxury without compromise to the land.',
+    },
+  ];
 
-export default function Craft() {
-  const sectionRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add('visible')
-        }),
-      { threshold: 0.1 }
-    )
-    sectionRef.current?.querySelectorAll('.reveal').forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
+  const galleryImages = [
+    'https://images.unsplash.com/photo-1761470484741-badac5364858?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1745894118353-88e64617e064?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1770625467606-d2cc74e3b583?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1723810742875-4e0c063f8756?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+  ];
 
   return (
-    <section id="craft" ref={sectionRef} className="py-24 lg:py-32 bg-card relative overflow-hidden">
-      {/* Background texture */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            'repeating-linear-gradient(45deg, hsl(38 92% 50%) 0px, hsl(38 92% 50%) 1px, transparent 1px, transparent 40px)',
-        }}
-      />
-
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
-        {/* Header — two-column layout */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start mb-20">
-          {/* Left: Copy */}
+    <section id="thematerial" className="py-24 md:py-32 bg-background relative overflow-hidden">
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 mb-32">
           <div className="reveal">
-            <span className="text-accent text-xs font-medium tracking-[0.3em] uppercase flex items-center gap-2 mb-4">
-              <span className="w-5 h-px bg-accent" /> 焼き杉 · The Craft
-            </span>
-            <h2 className="font-serif text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-              The art of preserving
-              <br />
-              wood through fire
+            <span className="text-primary font-serif italic mb-4 block tracking-wide">焼き杉 · The Material Story</span>
+            <h2 className="text-4xl md:text-6xl font-serif font-bold mb-8 tracking-tight leading-tight">
+              The art of preserving <br />
+              wood through <span className="fire-text italic">fire</span>
             </h2>
-            <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-              In feudal Japan, craftsmen discovered that flame — the very thing timber fears most —
-              is also its greatest protector. By charring the outer layer, they created a surface so
-              dense it repelled weather, pests, and decay for generations.
-            </p>
-            <blockquote className="border-l-2 border-accent pl-6 italic text-foreground/80 text-lg font-serif leading-relaxed">
-              "Fire does not destroy this timber. It preserves it — and in doing so, makes it more
-              beautiful than it was before."
-              <footer className="mt-3 text-sm text-muted-foreground not-italic font-sans tracking-wide">
-                — The Forged by Fire Philosophy
-              </footer>
-            </blockquote>
+            <div className="space-y-6 text-foreground/60 text-lg md:text-xl font-sans max-w-xl leading-relaxed">
+              <p>
+                In feudal Japan, craftsmen discovered that flame — the very thing timber fears most — is also its greatest protector. By charring the outer layer of cedar planks, they created a surface so dense and mineralised it repelled weather, pests, and decay for generations.
+              </p>
+              <p>
+                At Forged by Fire, we apply this ancient wisdom to every facade we build — not as a stylistic nod, but as a genuine commitment to materials that mean something. The result is a home whose exterior tells a story of transformation; where destruction and beauty are revealed as the same act.
+              </p>
+            </div>
+            
+            <div className="mt-12 p-8 border-l-2 border-primary bg-black/20 backdrop-blur-sm rounded-r-2xl max-w-xl reveal reveal-delay-2 group transition-all duration-500 hover:border-primary/50 hover:bg-black/30">
+              <blockquote className="text-xl md:text-2xl font-serif italic text-foreground leading-snug transition-colors group-hover:text-primary transition-colors">
+                "Fire does not destroy this timber. It preserves it — and in doing so, makes it more beautiful than it was before."
+              </blockquote>
+              <cite className="block mt-4 text-xs uppercase tracking-[0.2em] font-bold text-foreground/30 font-sans not-italic transition-colors group-hover:text-foreground/50">
+                The Forged by Fire Philosophy
+              </cite>
+            </div>
           </div>
 
-          {/* Right: Main image */}
-          <div className="reveal reveal-delay-2">
-            <div className="relative aspect-[4/5] rounded-sm overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=900&q=80"
-                alt="Shou Sugi Ban fire-charred timber detail"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-card/70 to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6">
-                <div className="bg-card/90 backdrop-blur-sm border border-border/50 rounded-sm p-4">
-                  <div className="text-xs text-accent tracking-widest uppercase mb-1">
-                    Authentic Process
-                  </div>
-                  <div className="text-sm text-foreground leading-snug">
-                    Each plank is hand-charred, brushed and oiled on-site in our workshop before
-                    installation.
-                  </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-16 lg:pt-24">
+            {philosophies.map((item, idx) => (
+              <div key={item.title} className={`reveal reveal-delay-${idx + 1}`}>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-[2px] w-6 bg-primary"></div>
+                  <h3 className="text-xl md:text-2xl font-serif font-bold text-foreground group-hover:text-primary transition-colors">{item.title}</h3>
                 </div>
+                <p className="text-foreground/50 text-sm md:text-base font-sans leading-relaxed italic tracking-wide">
+                  {item.description}
+                </p>
               </div>
-            </div>
+            ))}
           </div>
         </div>
 
-        {/* Qualities grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-20">
-          {qualities.map((q, i) => (
-            <div
-              key={q.title}
-              className={`reveal reveal-delay-${i + 1} p-6 border border-border/60 rounded-sm hover:border-accent/30 transition-all duration-300 group`}
-            >
-              <div
-                className="w-8 h-8 rounded-sm flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110"
-                style={{
-                  background:
-                    'linear-gradient(135deg, hsl(21 91% 41% / 0.3), hsl(38 92% 50% / 0.15))',
-                  border: '1px solid hsl(38 92% 50% / 0.3)',
-                }}
-              >
-                <span className="text-accent text-sm">✦</span>
-              </div>
-              <h3 className="font-serif text-lg font-semibold mb-2">{q.title}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">{q.description}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Gallery */}
+        {/* Interior Gallery */}
         <div className="reveal">
-          <div className="text-center mb-8">
-            <span className="text-muted-foreground text-xs tracking-widest uppercase">
-              Interior Finishes — Actual Builds
-            </span>
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
+            <div>
+              <span className="text-primary font-serif italic mb-2 block text-sm tracking-widest uppercase">Visual Proof</span>
+              <h2 className="text-3xl md:text-5xl font-serif font-bold tracking-tight">Interior Finishes — Actual Builds</h2>
+            </div>
+            <div className="h-px flex-1 bg-white/10 mx-12 hidden md:block"></div>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-            {[
-              'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=600&q=80',
-              'https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?w=600&q=80',
-              'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80',
-              'https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=600&q=80',
-            ].map((src, i) => (
-              <div
-                key={i}
-                className={`reveal reveal-delay-${i + 1} relative aspect-square overflow-hidden rounded-sm group cursor-pointer`}
-              >
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {galleryImages.map((img, idx) => (
+              <div key={idx} className={`reveal reveal-delay-${idx + 1} overflow-hidden rounded-2xl aspect-[4/5] group cursor-pointer border border-white/5 hover:border-primary/20 transition-all duration-700 hover:shadow-fire`}>
                 <img
-                  src={src}
-                  alt={`Interior finish ${i + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  src={img}
+                  alt={`Forged by Fire Interior ${idx + 1}`}
+                  className="w-full h-full object-cover transition-all duration-1000 grayscale group-hover:grayscale-0 group-hover:scale-110 opacity-80 group-hover:opacity-100"
                 />
-                <div className="absolute inset-0 bg-background/20 group-hover:bg-transparent transition-all duration-300" />
               </div>
             ))}
           </div>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

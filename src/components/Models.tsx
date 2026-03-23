@@ -1,178 +1,81 @@
-import { useEffect, useRef } from 'react'
+import React from 'react';
+import { Button } from './ui/button';
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from './ui/card';
 
-const models = [
-  {
-    name: 'The Ember',
-    tagline: 'For the solitary visionary',
-    description:
-      'A singular architectural statement. Compact in footprint, boundless in character. Perfect for remote escapes, creative studios, or high-yield short-stay investments.',
-    price: 'From $165,000',
-    sqm: '38–55 sqm',
-    features: [
-      '1 Bedroom + Ensuite',
-      'Premium kitchen & appliances',
-      'Authentic Shou Sugi Ban cladding',
-      'Off-grid solar & water ready',
-      'Delivered across Australia',
-    ],
-    image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&q=80',
-    badge: null,
-  },
-  {
-    name: 'The Sovereign',
-    tagline: 'The flagship sanctuary',
-    description:
-      'Our most expansive dwelling. Where ancient Japanese craftsmanship meets contemporary Australian luxury living. Designed for those who refuse to compromise.',
-    price: 'From $280,000',
-    sqm: '65–90 sqm',
-    features: [
-      '2 Bedrooms + Study/Retreat',
-      'Chef kitchen with stone benchtops',
-      'Solar+ with battery storage',
-      'Premium interior finish package',
-      'Landscaping consultation included',
-    ],
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
-    badge: 'Most Popular',
-  },
-  {
-    name: 'The Refuge',
-    tagline: 'Retreat. Restore. Return.',
-    description:
-      'Designed for eco-luxury retreat owners and savvy Airbnb investors. Guests ask about the timber before they even see inside. Commands premium nightly rates.',
-    price: 'From $220,000',
-    sqm: '50–70 sqm',
-    features: [
-      '1–2 Bedrooms configurable',
-      'Biophilic living & dining',
-      'Net-zero energy package',
-      'Shou Sugi Ban feature walls (interior)',
-      '10-year structural warranty',
-    ],
-    image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',
-    badge: 'Best ROI',
-  },
-]
-
-export default function Models() {
-  const sectionRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add('visible')
-        }),
-      { threshold: 0.1 }
-    )
-    sectionRef.current?.querySelectorAll('.reveal').forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
+export const Models = () => {
+  const models = [
+    {
+      id: 'ember',
+      name: 'The Ember',
+      tagline: 'For the solitary visionary',
+      description: 'A singular architectural statement. Compact in footprint, limitless in character.',
+      price: 'From $185K',
+      image: 'https://images.unsplash.com/photo-1761470484741-badac5364858?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    },
+    {
+      id: 'sovereign',
+      name: 'The Sovereign',
+      tagline: 'The flagship sanctuary',
+      description: 'Our most expansive dwelling. Where Japanese craftsmanship meets luxury.',
+      price: 'From $295K',
+      image: 'https://images.unsplash.com/photo-1568659585069-facb248c4935?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      featured: true,
+    },
+    {
+      id: 'refuge',
+      name: 'The Refuge',
+      tagline: 'Retreat. Restore. Return.',
+      description: 'Designed for eco-luxury retreats and premium Airbnb investment properties across Australia.',
+      price: 'From $235K',
+      image: 'https://images.unsplash.com/photo-1627750673372-ceabdbeb768c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    },
+  ];
 
   return (
-    <section id="models" ref={sectionRef} className="py-24 lg:py-32 bg-background">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        {/* Header */}
-        <div className="mb-16 reveal">
-          <span className="text-accent text-xs font-medium tracking-[0.3em] uppercase flex items-center gap-2 mb-4">
-            <span className="w-5 h-px bg-accent" /> Our Collection
-          </span>
-          <h2 className="font-serif text-4xl lg:text-5xl font-bold mb-4">
-            Architectural homes
-            <br />
-            forged in fire
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl leading-relaxed">
-            Each Forged by Fire home is a bespoke commission — built to your land, your vision, and
-            your life. No templates. No off-the-shelf solutions. Every surface tells a story only
-            fire can write.
-          </p>
+    <section id="ourwork" className="py-24 md:py-32 bg-background relative overflow-hidden">
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+          <div className="max-w-2xl">
+            <span className="text-primary font-serif italic mb-4 block tracking-wide">焼き杉 · Our Collection</span>
+            <h2 className="text-4xl md:text-6xl font-serif font-bold mb-6 tracking-tight leading-tight">
+              Architectural cabins <br />
+              forged in <span className="fire-text italic">fire</span>
+            </h2>
+            <p className="text-foreground/60 text-lg md:text-xl font-sans max-w-xl">
+              Each Forged by Fire home is a bespoke commission — built to your land, your vision, and your life. No two homes are identical. Every surface tells a story only fire can write.
+            </p>
+          </div>
         </div>
 
-        {/* Models grid */}
-        <div className="grid lg:grid-cols-3 gap-8">
-          {models.map((model, i) => (
-            <div
-              key={model.name}
-              className={`reveal reveal-delay-${i + 1} group relative flex flex-col bg-card border border-border rounded-sm overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-lg`}
-              style={{ boxShadow: '0 4px 24px hsl(17 14% 4% / 0.5)' }}
-            >
-              {/* Badge */}
-              {model.badge && (
-                <div
-                  className="absolute top-4 right-4 z-10 px-3 py-1 text-xs font-semibold tracking-wide text-white rounded-sm"
-                  style={{
-                    background: 'linear-gradient(135deg, hsl(21 91% 41%), hsl(38 92% 50%))',
-                  }}
-                >
-                  {model.badge}
-                </div>
-              )}
-
-              {/* Image */}
-              <div className="relative h-56 overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          {models.map((model, idx) => (
+            <div key={model.id} className={`reveal reveal-delay-${idx + 1} group`}>
+              <div className="relative overflow-hidden mb-8 rounded-2xl bg-charcoal border border-white/5 transition-all duration-700 hover:border-primary/20 hover:shadow-fire">
                 <img
                   src={model.image}
                   alt={model.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full aspect-[4/5] object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0 opacity-80 group-hover:opacity-100"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
-                <div className="absolute bottom-4 left-5">
-                  <span className="text-xs text-muted-foreground italic">{model.tagline}</span>
+                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-80 transition-opacity duration-700 group-hover:opacity-40"></div>
+                <div className="absolute top-6 left-6 flex items-center gap-3">
+                  <div className="h-[1px] w-6 bg-primary"></div>
+                  <span className="text-xs uppercase font-bold tracking-widest text-white/70">{model.tagline}</span>
+                </div>
+                <div className="absolute bottom-6 left-6 right-6">
+                  <div className="text-3xl font-serif font-bold text-white mb-2">{model.name}</div>
+                  <div className="text-primary font-bold">{model.price}</div>
                 </div>
               </div>
-
-              {/* Content */}
-              <div className="p-6 flex flex-col flex-1">
-                <div className="flex items-start justify-between mb-3">
-                  <h3 className="font-serif text-2xl font-bold">{model.name}</h3>
-                  <span className="text-xs text-muted-foreground mt-1 flex-shrink-0 ml-2">
-                    {model.sqm}
-                  </span>
-                </div>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-5">
-                  {model.description}
-                </p>
-
-                {/* Features */}
-                <ul className="space-y-2 mb-6 flex-1">
-                  {model.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <span className="text-accent mt-0.5 text-xs flex-shrink-0">✦</span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Price + CTA */}
-                <div className="border-t border-border/50 pt-5">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-xl font-serif font-bold fire-text">{model.price}</span>
-                    <span className="text-xs text-muted-foreground">incl. delivery & install</span>
-                  </div>
-                  <a
-                    href="#contact"
-                    className="block w-full text-center py-3 text-sm font-medium border border-primary/50 text-primary rounded-sm transition-all duration-200 hover:bg-primary hover:text-white hover:border-primary"
-                  >
-                    Commission This Home →
-                  </a>
-                </div>
-              </div>
+              <p className="text-foreground/50 text-sm md:text-base mb-6 leading-relaxed line-clamp-2 italic tracking-wide group-hover:text-foreground/80 transition-colors">
+                {model.description}
+              </p>
+              <Button variant="link" className="p-0 h-auto text-primary hover:text-white transition-colors group/btn font-serif text-lg tracking-tight">
+                Commission <span className="ml-2 inline-block transition-transform group-hover/btn:translate-x-1 duration-300">→</span>
+              </Button>
             </div>
           ))}
         </div>
-
-        {/* Custom commission CTA */}
-        <div className="mt-12 text-center reveal">
-          <p className="text-muted-foreground mb-3 text-sm">Need something completely unique?</p>
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 text-accent hover:text-foreground transition-colors font-medium text-sm"
-          >
-            Ask about fully custom commissions →
-          </a>
-        </div>
       </div>
     </section>
-  )
-}
+  );
+};

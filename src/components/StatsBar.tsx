@@ -1,31 +1,23 @@
-export default function StatsBar() {
-  const stats = [
-    { value: '100+', label: 'Homes Delivered', sub: 'Across Australia' },
-    { value: '75yr+', label: 'Timber Longevity', sub: 'Without chemicals' },
-    { value: '4.9★', label: 'Client Rating', sub: 'From 80+ reviews' },
-    { value: '100%', label: 'Bespoke Builds', sub: 'No two alike' },
-  ]
+import React from 'react';
 
+export const StatsBar = () => {
   return (
-    <section className="border-y border-border/50 bg-card">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="grid grid-cols-2 lg:grid-cols-4">
-          {stats.map((s, i) => (
-            <div
-              key={s.label}
-              className={`py-8 px-4 text-center ${
-                i < stats.length - 1 ? 'lg:border-r border-border/40' : ''
-              } ${i % 2 === 0 ? 'border-r lg:border-r-0' : ''} border-border/40`}
-            >
-              <div className="text-3xl lg:text-4xl font-serif font-bold fire-text mb-1">
-                {s.value}
-              </div>
-              <div className="text-sm font-medium text-foreground mb-0.5">{s.label}</div>
-              <div className="text-xs text-muted-foreground">{s.sub}</div>
-            </div>
-          ))}
-        </div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-10 md:py-16 border-y border-white/10 bg-black/30 backdrop-blur-md rounded-2xl px-12 transition-all duration-500 hover:border-primary/20 hover:bg-black/50">
+      <div className="flex flex-col items-center md:items-start text-center md:text-left group transition-all">
+        <span className="text-4xl md:text-5xl font-serif font-bold text-primary mb-2 transition-transform group-hover:scale-105">100%</span>
+        <span className="text-sm font-medium tracking-widest uppercase text-foreground/50 group-hover:text-foreground/80 transition-colors italic">Authentic Shou Sugi Ban</span>
       </div>
-    </section>
-  )
-}
+      <div className="flex flex-col items-center md:items-start text-center md:text-left group border-y md:border-y-0 md:border-x border-white/10 py-8 md:py-0 md:px-8">
+        <span className="text-4xl md:text-5xl font-serif font-bold text-primary mb-2 transition-transform group-hover:scale-105 tracking-tight flex items-center gap-3">
+          AUS
+          <div className="h-6 w-[1px] bg-primary/30"></div>
+        </span>
+        <span className="text-sm font-medium tracking-widest uppercase text-foreground/50 group-hover:text-foreground/80 transition-colors italic">Australian Built</span>
+      </div>
+      <div className="flex flex-col items-center md:items-start text-center md:text-left group transition-all">
+        <span className="text-4xl md:text-5xl font-serif font-bold text-primary mb-2 transition-transform group-hover:scale-105 tracking-tight">75yr+</span>
+        <span className="text-sm font-medium tracking-widest uppercase text-foreground/50 group-hover:text-foreground/80 transition-colors italic">Timber Longevity</span>
+      </div>
+    </div>
+  );
+};

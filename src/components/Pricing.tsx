@@ -1,184 +1,110 @@
-import { useEffect, useRef } from 'react'
+import React from 'react';
+import { Button } from './ui/button';
 
-const plans = [
-  {
-    name: 'The Ember',
-    price: '$165,000',
-    tagline: 'A singular architectural sanctuary',
-    description:
-      'For solo living, creative studios, or high-yield short stays. Compact in footprint, limitless in character.',
-    features: [
-      '38–55 sqm floor plan',
-      '1 bedroom with ensuite',
-      'Full kitchen — premium appliances',
-      'Authentic Shou Sugi Ban cladding',
-      'Off-grid solar & water ready',
-      'Delivered & installed across Australia',
-      '5-year structural warranty',
-    ],
-    highlight: false,
-    cta: 'Commission The Ember',
-  },
-  {
-    name: 'The Sovereign',
-    price: '$280,000',
-    tagline: 'The highest expression of the craft',
-    description:
-      "Our flagship commission — the fullest expression of Shou Sugi Ban luxury modular architecture.",
-    features: [
-      '65–90 sqm floor plan',
-      '2 bedrooms + study/retreat',
-      'Chef kitchen with stone benchtops',
-      'Solar+ with battery storage',
-      'Premium interior finish package',
-      'Landscaping consultation',
-      '10-year structural warranty',
-      'Priority project management',
-    ],
-    highlight: true,
-    cta: 'Commission The Sovereign',
-  },
-  {
-    name: 'The Refuge',
-    price: '$220,000',
-    tagline: 'Engineered for premium ROI',
-    description:
-      'Crafted for eco-luxury retreat owners and Airbnb investors seeking architectural distinction and maximum returns.',
-    features: [
-      '50–70 sqm floor plan',
-      '1–2 bedrooms configurable',
-      'Biophilic living & dining space',
-      'Net-zero energy package',
-      'Shou Sugi Ban feature walls (interior)',
-      'Delivered across Australia',
-      '10-year structural warranty',
-    ],
-    highlight: false,
-    cta: 'Commission The Refuge',
-  },
-]
-
-export default function Pricing() {
-  const sectionRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add('visible')
-        }),
-      { threshold: 0.1 }
-    )
-    sectionRef.current?.querySelectorAll('.reveal').forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
+export const Pricing = () => {
+  const models = [
+    {
+      name: 'The Ember',
+      tagline: 'A singular architectural sanctuary for solo living, creative studios, or high-yield short stays.',
+      price: '$185,000',
+      features: [
+        '38–55 sqm floor plan',
+        '1 bedroom with ensuite',
+        'Full kitchen — premium appliances',
+        'Authentic Shou Sugi Ban cladding',
+        'Off-grid solar & water ready',
+        'Delivered & installed across Australia',
+      ],
+    },
+    {
+      name: 'The Sovereign',
+      tagline: 'Our flagship commission — the highest expression of Shou Sugi Ban luxury architecture.',
+      price: '$295,000',
+      featured: true,
+      features: [
+        '65–90 sqm floor plan',
+        '2 bedrooms + study/retreat',
+        'Chef kitchen with stone benchtops',
+        'Solar+ with battery storage',
+        'Premium interior finish package',
+        'Landscaping consultation included',
+      ],
+    },
+    {
+      name: 'The Refuge',
+      tagline: 'Crafted for eco-luxury retreat owners and Airbnb investors seeking architectural distinction.',
+      price: '$235,000',
+      features: [
+        '50–70 sqm floor plan',
+        '1–2 bedrooms configurable',
+        'Biophilic living & dining space',
+        'Net-zero energy package',
+        'Shou Sugi Ban feature walls (interior)',
+        '10-year structural warranty',
+      ],
+    },
+  ];
 
   return (
-    <section id="pricing" ref={sectionRef} className="py-24 lg:py-32 bg-background">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        {/* Header */}
-        <div className="text-center mb-16 reveal">
-          <span className="text-accent text-xs font-medium tracking-[0.3em] uppercase flex items-center justify-center gap-3 mb-4">
-            <span className="w-8 h-px bg-accent" />
-            Transparent Pricing
-            <span className="w-8 h-px bg-accent" />
-          </span>
-          <h2 className="font-serif text-4xl lg:text-5xl font-bold mb-4">
-            Your sanctuary,
-            <br />
-            fully costed
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-xl mx-auto leading-relaxed">
-            All-inclusive pricing: design, Shou Sugi Ban cladding, fabrication, delivery and
-            installation across Australia. No hidden costs. No surprises.
-          </p>
+    <section id="investment" className="py-24 md:py-32 bg-background relative overflow-hidden">
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8">
+          <div className="max-w-3xl">
+            <span className="text-primary font-serif italic mb-4 block tracking-wide">Investment · Transparent Pricing</span>
+            <h2 className="text-4xl md:text-6xl font-serif font-bold mb-8 tracking-tight leading-tight">
+              Your <span className="fire-text italic">sanctuary,</span> <br />
+              fully costed
+            </h2>
+            <p className="text-foreground/60 text-lg md:text-xl font-sans max-w-xl">
+              All-inclusive pricing: design, Shou Sugi Ban cladding, fabrication, delivery and installation across Australia. No hidden costs. No surprises.
+            </p>
+          </div>
         </div>
 
-        {/* Pricing cards */}
-        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8 items-start">
-          {plans.map((plan, i) => (
-            <div
-              key={plan.name}
-              className={`reveal reveal-delay-${i + 1} relative rounded-sm border flex flex-col transition-all duration-300 hover:-translate-y-1 ${
-                plan.highlight
-                  ? 'border-accent/50 bg-card'
-                  : 'border-border/50 bg-card/60'
-              }`}
-              style={
-                plan.highlight
-                  ? { boxShadow: '0 0 50px hsl(38 92% 50% / 0.1), 0 8px 32px hsl(17 14% 4% / 0.5)' }
-                  : { boxShadow: '0 4px 24px hsl(17 14% 4% / 0.4)' }
-              }
-            >
-              {/* "Most Commissioned" badge */}
-              {plan.highlight && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
-                  <div
-                    className="px-4 py-1.5 text-xs font-bold tracking-widest uppercase text-white rounded-sm whitespace-nowrap"
-                    style={{
-                      background: 'linear-gradient(135deg, hsl(21 91% 41%), hsl(38 92% 50%))',
-                    }}
-                  >
-                    Most Commissioned
-                  </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+          {models.map((model, idx) => (
+            <div key={model.name} className={`reveal reveal-delay-${idx + 1} group flex flex-col p-8 md:p-12 rounded-2xl bg-charcoal border border-white/5 hover:border-primary/20 transition-all duration-700 hover:shadow-fire h-full relative overflow-hidden`}>
+              {model.featured && (
+                <div className="absolute top-0 right-0 py-2 px-10 bg-primary text-background font-bold uppercase text-[10px] tracking-widest translate-x-[30%] translate-y-[100%] rotate-45 z-20 shadow-xl">
+                  Most Commissioned
                 </div>
               )}
-
-              <div className={`p-7 lg:p-8 flex flex-col h-full ${plan.highlight ? 'pt-10' : ''}`}>
-                {/* Plan header */}
-                <div className="mb-6">
-                  <h3 className="font-serif text-2xl font-bold mb-1">{plan.name}</h3>
-                  <p className="text-muted-foreground text-xs tracking-wide mb-5">{plan.tagline}</p>
-
-                  <div className="mb-1">
-                    <span className="text-4xl font-serif font-bold fire-text">{plan.price}</span>
+              
+              <div className="flex-1 flex flex-col">
+                <h3 className="text-2xl md:text-3xl font-serif font-bold text-foreground group-hover:text-primary transition-colors mb-4">{model.name}</h3>
+                <p className="text-foreground/50 text-sm md:text-base font-sans leading-relaxed mb-8 italic tracking-wide group-hover:text-foreground/80 transition-colors">
+                  {model.tagline}
+                </p>
+                
+                <div className="flex flex-col mb-10 border-y border-white/5 py-8 group-hover:border-primary/20 transition-all duration-500">
+                  <span className="text-foreground/30 text-xs font-bold uppercase tracking-widest mb-2 font-sans group-hover:text-foreground/50 transition-colors">Investment From</span>
+                  <div className="flex items-end gap-2">
+                    <span className="text-4xl md:text-5xl font-serif font-bold text-primary group-hover:scale-105 transition-transform origin-left duration-500">{model.price}</span>
                   </div>
-                  <p className="text-xs text-muted-foreground mb-5">
-                    incl. design, fabrication, delivery & install
-                  </p>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{plan.description}</p>
+                  <span className="text-[10px] text-foreground/20 font-sans mt-2 group-hover:text-foreground/40 transition-colors">incl. delivery & install</span>
                 </div>
-
-                {/* Divider */}
-                <div className="h-px bg-border/50 mb-6" />
-
-                {/* Features */}
-                <ul className="space-y-3 mb-8 flex-1">
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-3 text-sm text-muted-foreground">
-                      <span className="text-accent mt-0.5 text-xs flex-shrink-0">✓</span>
-                      {f}
+                
+                <ul className="space-y-4 mb-12">
+                  {model.features.map((feature, i) => (
+                    <li key={i} className="flex items-center gap-3 text-sm md:text-base text-foreground/40 group-hover:text-foreground/70 transition-colors font-sans italic tracking-wide">
+                      <div className="h-[1px] w-4 bg-primary/30 group-hover:bg-primary/70 transition-colors"></div>
+                      {feature}
                     </li>
                   ))}
                 </ul>
-
-                {/* CTA */}
-                <a
-                  href="#contact"
-                  className={`block w-full text-center py-3.5 text-sm font-semibold rounded-sm transition-all duration-200 ${
-                    plan.highlight
-                      ? 'text-white hover:brightness-110 hover:scale-[1.01]'
-                      : 'border border-primary/50 text-primary hover:bg-primary hover:text-white hover:border-primary'
-                  }`}
-                  style={
-                    plan.highlight
-                      ? { background: 'linear-gradient(135deg, hsl(21 91% 41%), hsl(33 71% 27%))' }
-                      : {}
-                  }
-                >
-                  {plan.cta}
-                </a>
               </div>
+              
+              <Button size="lg" className="w-full py-8 text-lg font-serif tracking-tight border border-primary/20 hover:border-primary bg-transparent text-primary hover:bg-primary hover:text-white transition-all duration-500 group-hover:scale-105 hover:fire-glow">
+                Begin My Commission
+              </Button>
             </div>
           ))}
         </div>
-
-        {/* Disclaimer */}
-        <p className="text-center text-xs text-muted-foreground mt-8 reveal">
-          All pricing is indicative and subject to site assessment. Finance options available.
-          Prices include GST.
+        
+        <p className="text-xs text-foreground/20 mt-12 text-center font-sans uppercase tracking-[0.2em] font-bold reveal reveal-delay-4 leading-relaxed italic">
+          All pricing is indicative and subject to site assessment. Finance options available. Built in Australia.
         </p>
       </div>
     </section>
-  )
-}
+  );
+};
