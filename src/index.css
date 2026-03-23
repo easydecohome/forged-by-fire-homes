@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 17 14% 6%;
+    --foreground: 43 18% 87%;
+    --card: 17 12% 10%;
+    --card-foreground: 43 18% 87%;
+    --popover: 17 12% 10%;
+    --popover-foreground: 43 18% 87%;
+    --primary: 21 91% 41%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 33 71% 27%;
+    --secondary-foreground: 43 18% 87%;
+    --muted: 17 10% 15%;
+    --muted-foreground: 40 15% 55%;
+    --accent: 38 92% 50%;
+    --accent-foreground: 17 14% 6%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 17 10% 20%;
+    --input: 17 10% 18%;
+    --ring: 21 91% 41%;
+    --radius: 0.375rem;
+
+    --font-sans: 'DM Sans', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+
+    /* Shadows */
+    --shadow-2xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.2);
+    --shadow-xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.25);
+    --shadow-sm: 0px 4px 8px -1px hsl(0 0% 0% / 0.3), 0px 1px 2px -2px hsl(0 0% 0% / 0.3);
+    --shadow: 0px 4px 8px -1px hsl(0 0% 0% / 0.3), 0px 1px 2px -2px hsl(0 0% 0% / 0.3);
+    --shadow-md: 0px 4px 8px -1px hsl(0 0% 0% / 0.3), 0px 2px 4px -2px hsl(0 0% 0% / 0.3);
+    --shadow-lg: 0px 4px 8px -1px hsl(0 0% 0% / 0.3), 0px 4px 6px -2px hsl(0 0% 0% / 0.3);
+    --shadow-xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.3), 0px 8px 10px -2px hsl(0 0% 0% / 0.3);
+    --shadow-2xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.5);
+
+    /* Custom fire tokens */
+    --fire-glow: 0 0 60px hsl(38 92% 50% / 0.3);
+    --shadow-fire: 0 8px 32px hsl(21 91% 41% / 0.25);
+    --gradient-fire: linear-gradient(135deg, hsl(21 91% 41%), hsl(38 92% 50%));
+
+    /* Sidebar - matches dark theme */
+    --sidebar: 17 12% 10%;
+    --sidebar-foreground: 43 18% 87%;
+    --sidebar-primary: 21 91% 41%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 38 92% 50%;
+    --sidebar-accent-foreground: 17 14% 6%;
+    --sidebar-border: 17 10% 20%;
+    --sidebar-ring: 21 91% 41%;
+
+    /* Charts */
+    --chart-1: 21 91% 41%;
+    --chart-2: 38 92% 50%;
+    --chart-3: 33 71% 27%;
+    --chart-4: 40 15% 55%;
+    --chart-5: 17 10% 30%;
+
+    --tracking-normal: 0em;
+    --spacing: 0.25rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Scroll reveal animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* Noise texture overlay */
+.noise-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Fire gradient text */
+.fire-text {
+  background: linear-gradient(135deg, hsl(38 92% 65%), hsl(21 91% 55%), hsl(38 92% 50%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Amber underline decoration */
+.amber-underline {
+  position: relative;
+}
+.amber-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 3rem;
+  height: 2px;
+  background: hsl(38 92% 50%);
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  animation: marquee 35s linear infinite;
+  display: flex;
+  width: max-content;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Pulse for urgency banner */
+@keyframes pulse-fire {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.animate-pulse-fire {
+  animation: pulse-fire 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
