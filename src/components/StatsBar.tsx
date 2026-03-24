@@ -39,7 +39,7 @@ const CountUp: React.FC<{ stat: StatItem; inView: boolean }> = ({ stat, inView }
   if (stat.numericValue === 0) {
     return (
       <motion.span
-        className="text-4xl md:text-5xl font-serif font-bold text-primary"
+        className="text-4xl md:text-5xl font-serif font-bold text-primary counter-glow-anim"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={inView ? { opacity: 1, scale: 1 } : {}}
         transition={{ duration: 0.6, type: 'spring' }}
@@ -50,7 +50,7 @@ const CountUp: React.FC<{ stat: StatItem; inView: boolean }> = ({ stat, inView }
   }
 
   return (
-    <span className="text-4xl md:text-5xl font-serif font-bold text-primary">
+    <span className="text-4xl md:text-5xl font-serif font-bold text-primary counter-glow-anim">
       {stat.prefix}{inView ? count : 0}{stat.suffix}
     </span>
   );

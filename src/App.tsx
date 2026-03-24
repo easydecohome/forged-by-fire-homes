@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -12,6 +12,8 @@ import { Pricing } from './components/Pricing';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { FeaturesPage } from './pages/FeaturesPage';
+import UrgencyBanner from './components/UrgencyBanner';
+import { NewsletterModal } from './components/NewsletterModal';
 
 // Simple client-side router
 function useRoute() {
@@ -50,8 +52,15 @@ function useLinkInterceptor(navigate: (to: string) => void) {
 }
 
 function HomePage() {
+  const [newsletterOpen, setNewsletterOpen] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setNewsletterOpen(true), 30000);
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <main className="min-h-screen bg-background text-foreground noise-overlay relative overflow-hidden">
+      <UrgencyBanner />
+      <NewsletterModal open={newsletterOpen} onOpenChange={setNewsletterOpen} />
       <Navbar />
       <Hero />
       <Models />

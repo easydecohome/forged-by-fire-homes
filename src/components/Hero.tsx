@@ -142,7 +142,7 @@ const AnimatedHeadline: React.FC = () => {
             <motion.span
               key={wi}
               variants={wordAnim}
-              className={`inline-block mr-[0.25em] ${w.fire ? 'fire-text italic' : ''}`}
+              className={`inline-block mr-[0.25em] ${w.fire ? 'hero-shimmer-text italic' : ''}`}
             >
               {w.text}
             </motion.span>
@@ -173,6 +173,52 @@ const EmberDot: React.FC<{ delay: number; x: number }> = ({ delay, x }) => (
   />
 );
 
+// Scroll progress bar
+const ScrollProgressBar: React.FC = () => {
+  const { scrollYProgress } = useScroll();
+  return <motion.div className="scroll-progress" style={{ scaleX: scrollYProgress }} />;
+};
+
+// Cursor glow
+const CursorGlow: React.FC = () => {
+  const [pos, setPos] = useState({ x: -500, y: -500 });
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const move = (e: MouseEvent) => { setPos({ x: e.clientX, y: e.clientY }); setVisible(true); };
+    const leave = () => setVisible(false);
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseleave', leave);
+    return () => { window.removeEventListener('mousemove', move); window.removeEventListener('mouseleave', leave); };
+  }, []);
+  return <div className="cursor-glow" style={{ left: pos.x, top: pos.y, opacity: visible ? 1 : 0 }} />;
+};
+
+// Floating badge tags
+const FloatingBadges: React.FC = () => {
+  const badges = [
+    { text: 'Shou Sugi Ban', delay: 0, x: '8%', y: '30%' },
+    { text: 'Australian Built', delay: 1.5, x: '85%', y: '25%' },
+    { text: '75yr+ Longevity', delay: 3, x: '12%', y: '65%' },
+    { text: 'Net-Zero Ready', delay: 2, x: '80%', y: '60%' },
+  ];
+  return (
+    <>
+      {badges.map((b, i) => (
+        <motion.div key={i}
+          className="absolute hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-background/40 backdrop-blur-sm text-[10px] uppercase tracking-widest font-bold text-primary/70 z-20 pointer-events-none"
+          style={{ left: b.x, top: b.y }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: [0, 0.8, 0.8, 0], scale: [0.8, 1, 1, 0.8], y: [0, -8, -8, -16] }}
+          transition={{ duration: 5, delay: b.delay, repeat: Infinity, repeatDelay: 3, ease: 'easeInOut' }}
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+          {b.text}
+        </motion.div>
+      ))}
+    </>
+  );
+};
+
 export const Hero: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] });
@@ -199,6 +245,9 @@ export const Hero: React.FC = () => {
   }));
 
   return (
+    <>
+      <ScrollProgressBar />
+      <CursorGlow />
     <section ref={sectionRef} className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden">
       {/* Parallax Background */}
       <motion.div className="absolute inset-0 z-0" style={{ y: bgY }}>
@@ -223,6 +272,9 @@ export const Hero: React.FC = () => {
           <EmberDot key={i} delay={e.delay} x={e.x} />
         ))}
       </div>
+
+      {/* Floating Badges */}
+      <FloatingBadges />
 
       {/* Content */}
       <motion.div
@@ -323,5 +375,6 @@ export const Hero: React.FC = () => {
       {/* Bottom fire line */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
     </section>
+    </>
   );
 };

@@ -283,7 +283,7 @@ export const ROICalculator: React.FC = () => {
             <div className="sticky top-28 space-y-6">
 
               {/* Main results card */}
-              <div className="p-8 md:p-10 rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/5 via-card/30 to-transparent relative overflow-hidden">
+              <div className="p-8 md:p-10 rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/5 via-card/30 to-transparent relative overflow-hidden card-shine-wrapper">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[80px] rounded-full pointer-events-none" />
 
                 <div className="relative z-10">

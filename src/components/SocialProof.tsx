@@ -110,11 +110,11 @@ const ReviewCard: React.FC<{ review: typeof reviews[0]; index: number; isActive:
       className="cursor-pointer"
     >
       <div
-        className="p-6 md:p-8 rounded-2xl border h-full flex flex-col transition-all duration-500"
+        className="p-6 md:p-8 rounded-2xl border h-full flex flex-col transition-all duration-500 card-shine-wrapper"
         style={{
           borderColor: isActive ? 'rgba(217,119,6,0.4)' : 'rgba(255,255,255,0.06)',
           background: isActive ? 'rgba(217,119,6,0.05)' : 'rgba(255,255,255,0.02)',
-          boxShadow: isActive ? '0 0 40px rgba(217,119,6,0.12)' : 'none',
+          boxShadow: isActive ? '0 0 40px rgba(217,119,6,0.12), 0 20px 60px rgba(0,0,0,0.3)' : '0 4px 20px rgba(0,0,0,0.2)',
         }}
       >
         {/* Platform badge */}

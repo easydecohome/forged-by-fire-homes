@@ -15,10 +15,12 @@ export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const [showCTA, setShowCTA] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+      setShowCTA(window.scrollY > window.innerHeight * 0.6);
 
       // Active section detection
       const sections = navLinks.map(l => l.href.replace('#', ''));
@@ -42,6 +44,28 @@ export const Navbar: React.FC = () => {
 
   return (
     <>
+      {/* Sticky bottom CTA bar */}
+      <AnimatePresence>
+        {showCTA && (
+          <motion.div
+            className="fixed bottom-0 left-0 right-0 z-50 md:hidden"
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="bg-background/95 backdrop-blur-xl border-t border-primary/20 p-4 flex gap-3">
+              <button
+                onClick={() => scrollTo('#contact')}
+                className="flex-1 py-3.5 bg-primary text-white font-serif font-bold text-base rounded-xl fire-glow"
+              >
+                Commission My Sanctuary
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <motion.nav
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b',

@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { Button } from './ui/button';
 
 type Step = 1 | 2 | 3;
 
@@ -15,9 +13,24 @@ interface FormData {
   land: string;
 }
 
-const models = ['The Ember ($185K)', 'The Sovereign ($295K)', 'The Refuge ($235K)', 'Not sure yet'];
-const timelines = ['ASAP (0–3 months)', 'Mid-term (3–6 months)', 'Planning ahead (6–12 months)', 'Just exploring'];
-const budgets = ['$150K–$200K', '$200K–$250K', '$250K–$300K', '$300K+'];
+const models = [
+  { label: 'The Ember', sub: '$185K · 38–55 sqm' },
+  { label: 'The Sovereign', sub: '$295K · 65–90 sqm' },
+  { label: 'The Refuge', sub: '$235K · 50–70 sqm' },
+  { label: 'Not sure yet', sub: 'Help me choose' },
+];
+const timelines = [
+  { label: 'ASAP', sub: '0–3 months' },
+  { label: 'Mid-term', sub: '3–6 months' },
+  { label: 'Planning ahead', sub: '6–12 months' },
+  { label: 'Just exploring', sub: 'No rush' },
+];
+const budgets = [
+  { label: '$150K–$200K', sub: 'Entry range' },
+  { label: '$200K–$250K', sub: 'Mid range' },
+  { label: '$250K–$300K', sub: 'Premium' },
+  { label: '$300K+', sub: 'Bespoke' },
+];
 
 export const Contact: React.FC = () => {
   const ref = useRef<HTMLElement>(null);
@@ -60,6 +73,7 @@ export const Contact: React.FC = () => {
     <section ref={ref} id="contact" className="py-24 md:py-32 bg-background relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(217,119,6,0.06)_0,transparent_60%)] pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
@@ -140,9 +154,16 @@ export const Contact: React.FC = () => {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
-            <div className="bg-card/50 backdrop-blur-sm border border-white/10 rounded-3xl p-8 md:p-12 relative overflow-hidden">
+            <div className="bg-card/50 backdrop-blur-sm border border-white/10 rounded-3xl p-8 md:p-12 relative overflow-hidden card-shine-wrapper">
               {/* Background glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none rounded-3xl" />
+              {/* Animated border */}
+              <motion.div
+                className="absolute inset-0 rounded-3xl pointer-events-none"
+                style={{ background: 'linear-gradient(135deg, rgba(217,119,6,0.1), transparent, rgba(217,119,6,0.05))' }}
+                animate={{ opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+              />
 
               <AnimatePresence mode="wait">
                 {!submitted ? (
@@ -203,7 +224,7 @@ export const Contact: React.FC = () => {
                           </div>
 
                           <div className="space-y-4">
-                            <div className="group">
+                            <div className="group form-field-enhanced">
                               <label className="block text-xs uppercase tracking-[0.15em] font-bold text-foreground/40 font-sans mb-2">Full Name *</label>
                               <input
                                 type="text"
@@ -225,7 +246,7 @@ export const Contact: React.FC = () => {
                                 className="w-full bg-background/50 border border-white/10 rounded-xl px-4 py-4 text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all duration-300 font-sans"
                               />
                             </div>
-                            <div className="group">
+                            <div className="group form-field-enhanced">
                               <label className="block text-xs uppercase tracking-[0.15em] font-bold text-foreground/40 font-sans mb-2">Phone (optional)</label>
                               <input
                                 type="tel"
@@ -235,6 +256,20 @@ export const Contact: React.FC = () => {
                                 className="w-full bg-background/50 border border-white/10 rounded-xl px-4 py-4 text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all duration-300 font-sans"
                               />
                             </div>
+                            {/* Social proof nudge */}
+                            <motion.div
+                              className="flex items-center gap-3 p-3 rounded-xl bg-primary/5 border border-primary/10"
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: 0.3 }}
+                            >
+                              <div className="flex -space-x-2">
+                                {['M','S','P','D'].map((l, i) => (
+                                  <div key={i} className="w-7 h-7 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-[10px] font-bold text-primary">{l}</div>
+                                ))}
+                              </div>
+                              <p className="text-xs text-foreground/50 font-sans"><span className="text-primary font-bold">84 clients</span> commissioned their sanctuary this year</p>
+                            </motion.div>
                           </div>
                         </motion.div>
                       )}
@@ -260,18 +295,19 @@ export const Contact: React.FC = () => {
                               <div className="grid grid-cols-2 gap-3">
                                 {models.map(m => (
                                   <motion.button
-                                    key={m}
+                                    key={m.label}
                                     type="button"
-                                    onClick={() => update('model', m)}
-                                    className={`p-3 rounded-xl border text-sm font-sans text-left transition-all duration-300 ${
-                                      formData.model === m
-                                        ? 'border-primary bg-primary/10 text-primary'
-                                        : 'border-white/10 text-foreground/50 hover:border-white/30'
+                                    onClick={() => update('model', m.label)}
+                                    className={`option-card p-3 rounded-xl border text-sm font-sans text-left transition-all duration-300 ${
+                                      formData.model === m.label
+                                        ? 'selected'
+                                        : ''
                                     }`}
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                   >
-                                    {m}
+                                    <div className="font-bold text-foreground/80">{m.label}</div>
+                                    <div className="text-[11px] text-foreground/40 mt-0.5">{m.sub}</div>
                                   </motion.button>
                                 ))}
                               </div>
@@ -282,18 +318,17 @@ export const Contact: React.FC = () => {
                               <div className="grid grid-cols-2 gap-3">
                                 {timelines.map(t => (
                                   <motion.button
-                                    key={t}
+                                    key={t.label}
                                     type="button"
-                                    onClick={() => update('timeline', t)}
-                                    className={`p-3 rounded-xl border text-xs font-sans text-left transition-all duration-300 ${
-                                      formData.timeline === t
-                                        ? 'border-primary bg-primary/10 text-primary'
-                                        : 'border-white/10 text-foreground/50 hover:border-white/30'
+                                    onClick={() => update('timeline', t.label)}
+                                    className={`option-card p-3 rounded-xl border text-xs font-sans text-left transition-all duration-300 ${
+                                      formData.timeline === t.label ? 'selected' : ''
                                     }`}
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                   >
-                                    {t}
+                                    <div className="font-bold text-foreground/80">{t.label}</div>
+                                    <div className="text-[11px] text-foreground/40 mt-0.5">{t.sub}</div>
                                   </motion.button>
                                 ))}
                               </div>
@@ -304,18 +339,17 @@ export const Contact: React.FC = () => {
                               <div className="grid grid-cols-2 gap-3">
                                 {budgets.map(b => (
                                   <motion.button
-                                    key={b}
+                                    key={b.label}
                                     type="button"
-                                    onClick={() => update('budget', b)}
-                                    className={`p-3 rounded-xl border text-sm font-sans text-left transition-all duration-300 ${
-                                      formData.budget === b
-                                        ? 'border-primary bg-primary/10 text-primary'
-                                        : 'border-white/10 text-foreground/50 hover:border-white/30'
+                                    onClick={() => update('budget', b.label)}
+                                    className={`option-card p-3 rounded-xl border text-sm font-sans text-left transition-all duration-300 ${
+                                      formData.budget === b.label ? 'selected' : ''
                                     }`}
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                   >
-                                    {b}
+                                    <div className="font-bold text-foreground/80">{b.label}</div>
+                                    <div className="text-[11px] text-foreground/40 mt-0.5">{b.sub}</div>
                                   </motion.button>
                                 ))}
                               </div>
@@ -410,9 +444,17 @@ export const Contact: React.FC = () => {
                       )}
                     </div>
 
-                    <p className="text-[10px] text-foreground/20 text-center font-sans uppercase tracking-[0.2em] font-bold mt-4">
-                      We respond within 24 hours. Based in Australia, serving all regions.
-                    </p>
+                    {/* Trust signals */}
+                    <div className="flex items-center justify-center gap-6 mt-4">
+                      <div className="flex items-center gap-1.5">
+                        <svg className="w-3 h-3 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 1l2.928 6.472L20 8.472l-5 4.944 1.18 6.956L10 17.472l-6.18 2.9L5 13.416 0 8.472l7.072-.999L10 1z" clipRule="evenodd"/></svg>
+                        <span className="text-[10px] text-foreground/30 font-sans">4.97 Google Rating</span>
+                      </div>
+                      <div className="w-px h-3 bg-white/10" />
+                      <span className="text-[10px] text-foreground/30 font-sans">24hr response</span>
+                      <div className="w-px h-3 bg-white/10" />
+                      <span className="text-[10px] text-foreground/30 font-sans">No obligation</span>
+                    </div>
                   </motion.form>
                 ) : (
                   <motion.div

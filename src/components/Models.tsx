@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { Button } from './ui/button';
 
 interface Model {
@@ -57,7 +57,7 @@ const TiltCard: React.FC<{ model: Model; index: number }> = ({ model, index }) =
     const rect = card.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: y * -12, y: x * 12 });
+    setTilt({ x: y * -10, y: x * 10 });
   };
 
   return (
@@ -78,7 +78,7 @@ const TiltCard: React.FC<{ model: Model; index: number }> = ({ model, index }) =
         className="group cursor-pointer"
       >
         <div
-          className="relative overflow-hidden mb-8 rounded-2xl bg-charcoal border transition-all duration-700"
+          className="relative overflow-hidden mb-8 rounded-2xl bg-charcoal border transition-all duration-700 card-shine-wrapper"
           style={{
             boxShadow: isHovered
               ? '0 20px 60px rgba(217,119,6,0.25), 0 0 0 1px rgba(217,119,6,0.2)'
@@ -89,7 +89,7 @@ const TiltCard: React.FC<{ model: Model; index: number }> = ({ model, index }) =
         >
           {model.featured && (
             <motion.div
-              className="absolute top-4 right-4 z-20 bg-primary text-background text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full"
+              className="absolute top-4 right-4 z-20 bg-primary text-background text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full border-glow-anim"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.5 + index * 0.15, type: 'spring' }}
@@ -97,6 +97,31 @@ const TiltCard: React.FC<{ model: Model; index: number }> = ({ model, index }) =
               Most Commissioned
             </motion.div>
           )}
+
+          {/* Quick inquiry overlay on hover */}
+          <AnimatePresence>
+            {isHovered && (
+              <motion.div
+                className="absolute inset-0 z-30 flex items-center justify-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <motion.button
+                  className="px-6 py-3 bg-primary text-white font-serif font-bold text-sm rounded-xl fire-glow border border-primary/50 backdrop-blur-sm"
+                  initial={{ scale: 0.8, y: 10 }}
+                  animate={{ scale: 1, y: 0 }}
+                  exit={{ scale: 0.8, y: 10 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={(e) => { e.stopPropagation(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}
+                >
+                  Commission This Model →
+                </motion.button>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <motion.img
             src={model.image}
@@ -166,7 +191,7 @@ const TiltCard: React.FC<{ model: Model; index: number }> = ({ model, index }) =
           </div>
         </div>
 
-        <p className="text-foreground/50 text-sm md:text-base mb-6 leading-relaxed line-clamp-2 italic tracking-wide group-hover:text-foreground/80 transition-colors duration-300">
+        <p className="text-foreground/50 text-sm md:text-base mb-6 leading-relaxed italic tracking-wide group-hover:text-foreground/80 transition-colors duration-300">
           {model.description}
         </p>
 
@@ -194,7 +219,9 @@ export const Models: React.FC = () => {
   const headerInView = useInView(headerRef, { once: true, margin: '-80px' });
 
   return (
-    <section id="ourwork" className="py-24 md:py-32 bg-background relative overflow-hidden">
+    <section id="ourwork" className="py-24 md:py-32 bg-background relative overflow-hidden gradient-mesh">
+      {/* Background decoration */}
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           ref={headerRef}

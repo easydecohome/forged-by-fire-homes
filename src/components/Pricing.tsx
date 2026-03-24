@@ -59,7 +59,7 @@ const PricingCard: React.FC<{ model: typeof models[0]; index: number }> = ({ mod
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
       whileHover={{ y: -8 }}
-      className="group flex flex-col p-8 md:p-12 rounded-2xl bg-card border relative overflow-hidden h-full"
+      className="group flex flex-col p-8 md:p-12 rounded-2xl bg-card border relative overflow-hidden h-full card-shine-wrapper"
       style={{
         borderColor: hovered ? 'rgba(217,119,6,0.3)' : model.featured ? 'rgba(217,119,6,0.2)' : 'rgba(255,255,255,0.05)',
         boxShadow: hovered
