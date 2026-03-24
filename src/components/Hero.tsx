@@ -13,7 +13,7 @@ export const Hero = () => {
           className="w-full h-full object-cover grayscale opacity-40 transition-all duration-1000 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/40 to-background z-10"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(217,119,6,0.05)_0,transparent_70%)] z-10"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(217,119,6,0.05)_0,transparent_30%)] z-10"></div>
       </div>
 
       <div className="container mx-auto px-6 relative z-20 pt-20 flex flex-col items-center text-center">
