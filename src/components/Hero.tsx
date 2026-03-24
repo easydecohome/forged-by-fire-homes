@@ -101,11 +101,11 @@ const FireCanvas: React.FC = () => {
 // Animated headline word-by-word
 const AnimatedHeadline: React.FC = () => {
   const words = [
-    { text: 'Where', fire: false },
+    { text: 'Forged', fire: false },
+    { text: 'by', fire: false },
     { text: 'fire', fire: true },
-    { text: 'meets', fire: false },
     { text: '\n', fire: false },
-    { text: 'timber.', fire: true },
+    
     { text: '\n', fire: false },
     { text: 'Where', fire: false },
     { text: 'craft', fire: false },
