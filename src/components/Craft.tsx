@@ -161,7 +161,7 @@ export const Craft: React.FC = () => {
         </div>
 
         {/* Gallery */}
-        <div>
+        <div className="mb-20">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
             <div>
               <span className="text-primary font-serif italic mb-2 block text-sm tracking-widest uppercase">Visual Proof</span>
@@ -176,6 +176,49 @@ export const Craft: React.FC = () => {
             ))}
           </div>
         </div>
+
+        {/* CTA to Features page */}
+        <motion.div
+          className="relative overflow-hidden rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/8 via-card/30 to-transparent p-10 md:p-14"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.7 }}
+        >
+          <div className="absolute top-0 right-0 w-80 h-80 bg-primary/6 blur-[100px] rounded-full pointer-events-none" />
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+            <div className="max-w-xl">
+              <div className="text-xs uppercase tracking-[0.2em] text-primary/60 font-bold font-sans mb-3">Complete Specification</div>
+              <h3 className="text-2xl md:text-4xl font-serif font-bold mb-4 leading-tight">
+                Explore every feature,<br />
+                <span className="fire-text italic">material, and system</span>
+              </h3>
+              <p className="text-foreground/55 font-sans text-base leading-relaxed">
+                From the hand-charred Shou Sugi Ban cladding to the off-grid solar system, the engineered footing to the stargazing skylight — our complete feature specification covers every detail of a Forged by Fire home.
+              </p>
+            </div>
+            <div className="flex flex-col gap-4 flex-shrink-0">
+              <motion.a
+                href="/features"
+                className="inline-flex items-center gap-3 bg-primary text-white px-8 py-5 rounded-xl font-serif text-lg font-bold hover:bg-primary/90 fire-glow transition-all duration-300 whitespace-nowrap"
+                whileHover={{ scale: 1.03, x: 3 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                View Full Specification
+                <motion.span
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  →
+                </motion.span>
+              </motion.a>
+              <p className="text-[10px] text-foreground/25 font-sans italic text-center">
+                Exterior · Interior · Off-grid · Construction · Investment
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
       </div>
     </section>
   );
