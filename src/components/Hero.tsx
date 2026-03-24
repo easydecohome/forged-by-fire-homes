@@ -19,17 +19,17 @@ export const Hero = () => {
       <div className="container mx-auto px-6 relative z-20 pt-20 flex flex-col items-center text-center">
         <div className="inline-flex items-center gap-3 mb-8 reveal animate-fade-in">
           <div className="h-[1px] w-8 bg-primary"></div>
-          <span className="text-primary tracking-widest uppercase text-xs font-bold leading-none">Built in Rockhampton, QLD</span>
+          <span className="text-primary tracking-widest uppercase text-xs font-bold leading-none">Built in Australia </span>
           <div className="h-[1px] w-8 bg-primary"></div>
         </div>
 
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-foreground tracking-tight leading-[0.9] mb-8 max-w-5xl reveal reveal-delay-1">
-          Where Queensland timber meets <span className="fire-text italic">ancient fire.</span> <br />
+          Forged by <span className="fire-text italic">Fire.</span> <br />
           Where craft becomes home.
         </h1>
 
         <p className="text-lg md:text-xl text-foreground/70 max-w-2xl font-sans mb-12 reveal reveal-delay-2 leading-relaxed">
-          Cubic Homes builds architectural cabins and tiny homes clad in authentic Shou Sugi Ban — the ancient Japanese art of charring timber into a surface of extraordinary beauty, resilience, and character. Built in Rockhampton for Queensland's most discerning landscapes.
+          Cubic Homes builds architectural cabins and tiny homes clad in authentic Shou Sugi Ban — the ancient Japanese art of charring timber into a surface of extraordinary beauty, resilience, and character.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center gap-6 mb-20 reveal reveal-delay-3">
