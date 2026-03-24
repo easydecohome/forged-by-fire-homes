@@ -252,8 +252,8 @@ export const Hero: React.FC = () => {
       {/* Parallax Background */}
       <motion.div className="absolute inset-0 z-0" style={{ y: bgY }}>
         <motion.img
-          src="https://images.unsplash.com/photo-1568659585069-facb248c4935?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=80"
-          alt="Architectural Shou Sugi Ban Cabin Exterior"
+          src="./images/tiny-home-exterior.jpg"
+          alt="Forged by Fire — Shou Sugi Ban Tiny Home Exterior"
           className="w-full h-full object-cover grayscale opacity-50"
           style={{ scale: 1.1 }}
           animate={{ x: mousePos.x, y: mousePos.y }}
@@ -315,7 +315,7 @@ export const Hero: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.2 }}
         >
-          Forged by Fire builds architectural cabins clad in authentic Shou Sugi Ban — the ancient Japanese art of charring timber into a surface of extraordinary beauty, resilience, and character. Crafted for Australia's most discerning landscapes.
+          Escape the mortgage trap. Stop paying rent. Start earning Airbnb income. Our Shou Sugi Ban tiny homes are delivered turnkey in 16 weeks — off-grid ready, council-approved, and built to last 75 years.
         </motion.p>
 
         {/* CTAs */}

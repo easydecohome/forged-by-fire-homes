@@ -12,8 +12,13 @@ import { Pricing } from './components/Pricing';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { FeaturesPage } from './pages/FeaturesPage';
+import { ProductPage } from './pages/ProductPage';
 import UrgencyBanner from './components/UrgencyBanner';
 import { NewsletterModal } from './components/NewsletterModal';
+import { SolutionSection } from './components/SolutionSection';
+import { LifestyleTransform } from './components/LifestyleTransform';
+import { FloorPlanExplorer } from './components/FloorPlanExplorer';
+import { TrustStrip } from './components/TrustStrip';
 
 // Simple client-side router
 function useRoute() {
@@ -63,7 +68,11 @@ function HomePage() {
       <NewsletterModal open={newsletterOpen} onOpenChange={setNewsletterOpen} />
       <Navbar />
       <Hero />
+      <TrustStrip />
+      <SolutionSection />
       <Models />
+      <LifestyleTransform />
+      <FloorPlanExplorer />
       <Craft />
       <ShousugiBanStory />
       <Process />
@@ -84,10 +93,21 @@ function App() {
   useLinkInterceptor(navigate);
 
   const isFeatures = path === '/features' || path.includes('/features');
+  const isProduct = path === '/product' || path.includes('/product');
 
   return (
     <AnimatePresence mode="wait">
-      {isFeatures ? (
+      {isProduct ? (
+        <motion.div
+          key="product"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <ProductPage onBack={() => navigate('/')} />
+        </motion.div>
+      ) : isFeatures ? (
         <motion.div
           key="features"
           initial={{ opacity: 0 }}

@@ -385,3 +385,9 @@ html { overflow-x: hidden; }
   left: 0;
   transform: none;
 }
+
+/* ── Flip card 3D utilities ─────────────────────────────────── */
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}

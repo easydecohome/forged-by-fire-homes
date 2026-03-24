@@ -191,24 +191,32 @@ const TiltCard: React.FC<{ model: Model; index: number }> = ({ model, index }) =
           </div>
         </div>
 
-        <p className="text-foreground/50 text-sm md:text-base mb-6 leading-relaxed italic tracking-wide group-hover:text-foreground/80 transition-colors duration-300">
+        <p className="text-foreground/50 text-sm md:text-base mb-5 leading-relaxed italic tracking-wide group-hover:text-foreground/80 transition-colors duration-300">
           {model.description}
         </p>
 
-        <Button
-          variant="link"
-          className="p-0 h-auto text-primary hover:text-white transition-colors font-serif text-lg tracking-tight"
-          onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-        >
-          Commission{' '}
-          <motion.span
-            className="ml-2 inline-block"
-            animate={{ x: isHovered ? 6 : 0 }}
-            transition={{ type: 'spring', stiffness: 300 }}
+        <div className="flex items-center gap-4">
+          <Button
+            variant="link"
+            className="p-0 h-auto text-primary hover:text-white transition-colors font-serif text-lg tracking-tight"
+            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            →
-          </motion.span>
-        </Button>
+            Commission{' '}
+            <motion.span
+              className="ml-2 inline-block"
+              animate={{ x: isHovered ? 6 : 0 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+            >
+              →
+            </motion.span>
+          </Button>
+          <a
+            href="/product"
+            className="text-sm text-foreground/40 hover:text-foreground/70 transition-colors font-sans underline underline-offset-2"
+          >
+            View full specs
+          </a>
+        </div>
       </motion.div>
     </motion.div>
   );
@@ -237,14 +245,14 @@ export const Models: React.FC = () => {
               animate={headerInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              焼き杉 · Our Collection
+              焼き杉 · Your Solution Awaits
             </motion.span>
             <h2 className="text-4xl md:text-6xl font-serif font-bold mb-6 tracking-tight leading-tight">
-              Architectural cabins <br />
-              forged in <span className="fire-text italic">fire</span>
+              Choose your path<br />
+              to <span className="fire-text italic">freedom.</span>
             </h2>
             <p className="text-foreground/60 text-lg md:text-xl font-sans max-w-xl">
-              Each Forged by Fire home is a bespoke commission — built to your land, your vision, and your life. No two homes are identical. Every surface tells a story only fire can write.
+              Three models. Three solutions. Each one a bespoke commission built to your land, your vision, and your life — delivered in 16 weeks, backed by a 10-year warranty.
             </p>
           </div>
         </motion.div>
