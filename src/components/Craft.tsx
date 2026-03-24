@@ -1,38 +1,101 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 
-export const Craft = () => {
-  const philosophies = [
-    {
-      title: 'Born of Fire',
-      description: 'Shou Sugi Ban — 焼き杉 — is a 300-year-old Japanese technique of slowly charring timber with controlled flame. The surface blackens, crystallises, and transforms into something entirely new: a skin of carbonised beauty.',
-    },
-    {
-      title: 'Resilience as Aesthetic',
-      description: 'The charring process creates a natural barrier against moisture, insects, UV degradation, and fire. In Queensland\'s heat, storms, and humidity, this is not just beautiful — it is engineered longevity without chemicals.',
-    },
-    {
-      title: 'Ages Backwards',
-      description: 'Where standard cladding fades and fails, Shou Sugi Ban matures. Silver highlights emerge over decades. The grain deepens. Time does not diminish it — it refines it. A home that becomes more distinguished with each passing year.',
-    },
-    {
-      title: 'Sustainable by Nature',
-      description: 'No toxic preservatives, no synthetic coatings. The preservation is the fire itself — a closed-loop process that extends the life of natural timber by 75 years or more. Luxury without compromise to the land.',
-    },
-  ];
+const philosophies = [
+  {
+    title: 'Born of Fire',
+    description: 'Shou Sugi Ban — 焼き杉 — is a 300-year-old Japanese technique of slowly charring timber with controlled flame. The surface blackens, crystallises, and transforms into something entirely new: a skin of carbonised beauty.',
+  },
+  {
+    title: 'Resilience as Aesthetic',
+    description: 'The charring process creates a natural barrier against moisture, insects, UV degradation, and fire. In Australia\'s harsh landscapes, this is not just beautiful — it is engineered longevity without chemicals.',
+  },
+  {
+    title: 'Ages Backwards',
+    description: 'Where standard cladding fades and fails, Shou Sugi Ban matures. Silver highlights emerge over decades. The grain deepens. Time does not diminish it — it refines it. A home that becomes more distinguished with each passing year.',
+  },
+  {
+    title: 'Sustainable by Nature',
+    description: 'No toxic preservatives, no synthetic coatings. The preservation is the fire itself — a closed-loop process that extends the life of natural timber by 75 years or more. Luxury without compromise to the land.',
+  },
+];
 
-  const galleryImages = [
-    'https://images.unsplash.com/photo-1761470484741-badac5364858?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-    'https://images.unsplash.com/photo-1745894118353-88e64617e064?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-    'https://images.unsplash.com/photo-1770625467606-d2cc74e3b583?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-    'https://images.unsplash.com/photo-1723810742875-4e0c063f8756?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-  ];
+const galleryImages = [
+  'https://images.unsplash.com/photo-1761470484741-badac5364858?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1745894118353-88e64617e064?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1770625467606-d2cc74e3b583?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1723810742875-4e0c063f8756?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+];
+
+const GalleryImage: React.FC<{ src: string; index: number }> = ({ src, index }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+  const [hovered, setHovered] = React.useState(false);
 
   return (
-    <section id="thematerial" className="py-24 md:py-32 bg-background relative overflow-hidden">
+    <motion.div
+      ref={ref}
+      className="overflow-hidden rounded-2xl aspect-[4/5] cursor-pointer border border-white/5"
+      initial={{ opacity: 0, y: 40, scale: 0.95 }}
+      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+      transition={{ duration: 0.7, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      onHoverStart={() => setHovered(true)}
+      onHoverEnd={() => setHovered(false)}
+      style={{
+        borderColor: hovered ? 'rgba(217,119,6,0.25)' : 'rgba(255,255,255,0.05)',
+        boxShadow: hovered ? '0 20px 50px rgba(217,119,6,0.2)' : 'none',
+        transition: 'border-color 0.5s, box-shadow 0.5s',
+      }}
+    >
+      <motion.img
+        src={src}
+        alt={`Interior finish ${index + 1}`}
+        className="w-full h-full object-cover"
+        animate={{
+          scale: hovered ? 1.08 : 1,
+          filter: hovered ? 'grayscale(0%) brightness(1.1)' : 'grayscale(80%) brightness(0.75)',
+        }}
+        transition={{ duration: 0.7, ease: 'easeOut' }}
+      />
+    </motion.div>
+  );
+};
+
+export const Craft: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const headerInView = useInView(headerRef, { once: true, margin: '-80px' });
+  const quoteRef = useRef<HTMLDivElement>(null);
+  const quoteInView = useInView(quoteRef, { once: true, margin: '-60px' });
+
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
+  const bgY = useTransform(scrollYProgress, [0, 1], ['-5%', '5%']);
+
+  return (
+    <section ref={sectionRef} id="thematerial" className="py-24 md:py-32 bg-background relative overflow-hidden">
+      <motion.div
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_right,rgba(217,119,6,0.04)_0,transparent_60%)] pointer-events-none"
+        style={{ y: bgY }}
+      />
+
       <div className="container mx-auto px-6 relative z-10">
+        {/* Main content */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 mb-32">
-          <div className="reveal">
-            <span className="text-primary font-serif italic mb-4 block tracking-wide">焼き杉 · The Material Story</span>
+          {/* Left */}
+          <motion.div
+            ref={headerRef}
+            initial={{ opacity: 0, x: -40 }}
+            animate={headerInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.7 }}
+          >
+            <motion.span
+              className="text-primary font-serif italic mb-4 block tracking-wide"
+              initial={{ opacity: 0, y: -10 }}
+              animate={headerInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.1 }}
+            >
+              焼き杉 · The Material Story
+            </motion.span>
             <h2 className="text-4xl md:text-6xl font-serif font-bold mb-8 tracking-tight leading-tight">
               The art of preserving <br />
               wood through <span className="fire-text italic">fire</span>
@@ -42,54 +105,74 @@ export const Craft = () => {
                 In feudal Japan, craftsmen discovered that flame — the very thing timber fears most — is also its greatest protector. By charring the outer layer of cedar planks, they created a surface so dense and mineralised it repelled weather, pests, and decay for generations.
               </p>
               <p>
-                At Cubic Homes, we forge every facade in fire — not as a design trend, but as an investment in longevity. Shou Sugi Ban is Queensland timber transformed: darker than night, harder than rain, more beautiful with every passing season. In Rockhampton's heat and Central Queensland's storms, your home becomes more resilient, not less. This is what heritage looks like.
+                At Forged by Fire, we apply this ancient wisdom to every facade we build — not as a stylistic nod, but as a genuine commitment to materials that mean something. The result is a home whose exterior tells a story of transformation; where destruction and beauty are revealed as the same act.
               </p>
             </div>
-            
-            <div className="mt-12 p-8 border-l-2 border-primary bg-black/20 backdrop-blur-sm rounded-r-2xl max-w-xl reveal reveal-delay-2 group transition-all duration-500 hover:border-primary/50 hover:bg-black/30">
-              <blockquote className="text-xl md:text-2xl font-serif italic text-foreground leading-snug transition-colors group-hover:text-primary transition-colors">
+
+            <motion.div
+              ref={quoteRef}
+              className="mt-12 p-8 border-l-2 border-primary bg-black/20 backdrop-blur-sm rounded-r-2xl max-w-xl group transition-all duration-500 hover:bg-black/30"
+              initial={{ opacity: 0, x: -20 }}
+              animate={quoteInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              whileHover={{ borderLeftColor: 'rgba(217,119,6,0.8)' }}
+            >
+              <blockquote className="text-xl md:text-2xl font-serif italic text-foreground leading-snug group-hover:text-primary transition-colors duration-500">
                 "Fire does not destroy this timber. It preserves it — and in doing so, makes it more beautiful than it was before."
               </blockquote>
-              <cite className="block mt-4 text-xs uppercase tracking-[0.2em] font-bold text-foreground/30 font-sans not-italic transition-colors group-hover:text-foreground/50">
-                The Cubic Homes Philosophy
+              <cite className="block mt-4 text-xs uppercase tracking-[0.2em] font-bold text-foreground/30 font-sans not-italic group-hover:text-foreground/50 transition-colors">
+                The Forged by Fire Philosophy
               </cite>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
+          {/* Right — philosophy grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-16 lg:pt-24">
-            {philosophies.map((item, idx) => (
-              <div key={item.title} className={`reveal reveal-delay-${idx + 1}`}>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="h-[2px] w-6 bg-primary"></div>
-                  <h3 className="text-xl md:text-2xl font-serif font-bold text-foreground group-hover:text-primary transition-colors">{item.title}</h3>
-                </div>
-                <p className="text-foreground/50 text-sm md:text-base font-sans leading-relaxed italic tracking-wide">
-                  {item.description}
-                </p>
-              </div>
-            ))}
+            {philosophies.map((item, idx) => {
+              const itemRef = useRef<HTMLDivElement>(null);
+              const itemInView = useInView(itemRef, { once: true, margin: '-60px' });
+              return (
+                <motion.div
+                  key={item.title}
+                  ref={itemRef}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={itemInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: idx * 0.1 }}
+                  className="group"
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <motion.div
+                      className="h-[2px] bg-primary"
+                      initial={{ width: 0 }}
+                      animate={itemInView ? { width: 24 } : { width: 0 }}
+                      transition={{ duration: 0.5, delay: idx * 0.1 + 0.3 }}
+                    />
+                    <h3 className="text-xl md:text-2xl font-serif font-bold text-foreground group-hover:text-primary transition-colors duration-300">
+                      {item.title}
+                    </h3>
+                  </div>
+                  <p className="text-foreground/50 text-sm md:text-base font-sans leading-relaxed italic tracking-wide group-hover:text-foreground/70 transition-colors duration-300">
+                    {item.description}
+                  </p>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
 
-        {/* Interior Gallery */}
-        <div className="reveal">
+        {/* Gallery */}
+        <div>
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
             <div>
               <span className="text-primary font-serif italic mb-2 block text-sm tracking-widest uppercase">Visual Proof</span>
               <h2 className="text-3xl md:text-5xl font-serif font-bold tracking-tight">Interior Finishes — Actual Builds</h2>
             </div>
-            <div className="h-px flex-1 bg-white/10 mx-12 hidden md:block"></div>
+            <div className="h-px flex-1 bg-white/10 mx-12 hidden md:block" />
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {galleryImages.map((img, idx) => (
-              <div key={idx} className={`reveal reveal-delay-${idx + 1} overflow-hidden rounded-2xl aspect-[4/5] group cursor-pointer border border-white/5 hover:border-primary/20 transition-all duration-700 hover:shadow-fire`}>
-                <img
-                  src={img}
-                  alt={`Cubic Homes Interior ${idx + 1}`}
-                  className="w-full h-full object-cover transition-all duration-1000 grayscale group-hover:grayscale-0 group-hover:scale-110 opacity-80 group-hover:opacity-100"
-                />
-              </div>
+              <GalleryImage key={idx} src={img} index={idx} />
             ))}
           </div>
         </div>

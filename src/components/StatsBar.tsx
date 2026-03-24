@@ -1,23 +1,87 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
 
-export const StatsBar = () => {
+interface StatItem {
+  value: string;
+  numericValue: number;
+  suffix: string;
+  prefix: string;
+  label: string;
+}
+
+const stats: StatItem[] = [
+  { value: '100%', numericValue: 100, suffix: '%', prefix: '', label: 'Authentic Shou Sugi Ban' },
+  { value: 'AUS', numericValue: 0, suffix: '', prefix: '', label: 'Australian Built' },
+  { value: '75yr+', numericValue: 75, suffix: 'yr+', prefix: '', label: 'Timber Longevity' },
+];
+
+const CountUp: React.FC<{ stat: StatItem; inView: boolean }> = ({ stat, inView }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!inView || stat.numericValue === 0) return;
+    let start = 0;
+    const end = stat.numericValue;
+    const duration = 1800;
+    const step = (end / duration) * 16;
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= end) {
+        setCount(end);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(start));
+      }
+    }, 16);
+    return () => clearInterval(timer);
+  }, [inView, stat.numericValue]);
+
+  if (stat.numericValue === 0) {
+    return (
+      <motion.span
+        className="text-4xl md:text-5xl font-serif font-bold text-primary"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={inView ? { opacity: 1, scale: 1 } : {}}
+        transition={{ duration: 0.6, type: 'spring' }}
+      >
+        {stat.value}
+      </motion.span>
+    );
+  }
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-10 md:py-16 border-y border-white/10 bg-black/30 backdrop-blur-md rounded-2xl px-12 transition-all duration-500 hover:border-primary/20 hover:bg-black/50">
-      <div className="flex flex-col items-center md:items-start text-center md:text-left group transition-all">
-        <span className="text-4xl md:text-5xl font-serif font-bold text-primary mb-2 transition-transform group-hover:scale-105">100%</span>
-        <span className="text-sm font-medium tracking-widest uppercase text-foreground/50 group-hover:text-foreground/80 transition-colors italic">Authentic Shou Sugi Ban</span>
-      </div>
-      <div className="flex flex-col items-center md:items-start text-center md:text-left group border-y md:border-y-0 md:border-x border-white/10 py-8 md:py-0 md:px-8">
-        <span className="text-4xl md:text-5xl font-serif font-bold text-primary mb-2 transition-transform group-hover:scale-105 tracking-tight flex items-center gap-3">
-          QLD
-          <div className="h-6 w-[1px] bg-primary/30"></div>
-        </span>
-        <span className="text-sm font-medium tracking-widest uppercase text-foreground/50 group-hover:text-foreground/80 transition-colors italic">Built in Rockhampton</span>
-      </div>
-      <div className="flex flex-col items-center md:items-start text-center md:text-left group transition-all">
-        <span className="text-4xl md:text-5xl font-serif font-bold text-primary mb-2 transition-transform group-hover:scale-105 tracking-tight">75yr+</span>
-        <span className="text-sm font-medium tracking-widest uppercase text-foreground/50 group-hover:text-foreground/80 transition-colors italic">Timber Longevity</span>
-      </div>
-    </div>
+    <span className="text-4xl md:text-5xl font-serif font-bold text-primary">
+      {stat.prefix}{inView ? count : 0}{stat.suffix}
+    </span>
+  );
+};
+
+export const StatsBar: React.FC = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-50px' });
+
+  return (
+    <motion.div
+      ref={ref}
+      className="grid grid-cols-3 gap-8 py-8 border-t border-b border-white/10"
+      initial={{ opacity: 0 }}
+      animate={inView ? { opacity: 1 } : {}}
+      transition={{ duration: 0.6 }}
+    >
+      {stats.map((stat, i) => (
+        <motion.div
+          key={stat.label}
+          className="flex flex-col items-center text-center gap-2"
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: i * 0.15 }}
+        >
+          <CountUp stat={stat} inView={inView} />
+          <span className="text-xs uppercase tracking-[0.2em] font-bold text-foreground/50 font-sans">
+            {stat.label}
+          </span>
+        </motion.div>
+      ))}
+    </motion.div>
   );
 };
