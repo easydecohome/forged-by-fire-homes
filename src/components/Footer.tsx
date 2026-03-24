@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { NewsletterModal } from './NewsletterModal';
+import { Button } from './ui/button';
 
 export const Footer = () => {
+  const [newsletterOpen, setNewsletterOpen] = useState(false);
+
   return (
     <footer className="py-24 bg-background border-t border-white/5 relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
@@ -8,13 +12,21 @@ export const Footer = () => {
           <div className="md:col-span-2">
             <a href="#" className="flex items-center gap-2 group mb-8">
               <div className="w-8 h-8 bg-primary rotate-45 flex items-center justify-center transition-transform group-hover:rotate-[135deg] duration-500">
-                <div className="-rotate-45 font-serif font-bold text-background text-xl">F</div>
+                <div className="-rotate-45 font-serif font-bold text-background text-xl">C</div>
               </div>
-              <span className="font-serif text-3xl tracking-tight font-semibold">Forged by Fire</span>
+              <span className="font-serif text-3xl tracking-tight font-semibold">Cubic Homes</span>
             </a>
-            <p className="text-foreground/40 text-lg md:text-xl font-sans max-w-sm leading-relaxed italic tracking-wide group hover:text-foreground/60 transition-colors">
-              Crafting architectural sanctuaries through the transformative power of Shou Sugi Ban. Built for Australia's most discerning landscapes.
+            <p className="text-foreground/40 text-lg md:text-xl font-sans max-w-sm leading-relaxed italic tracking-wide group hover:text-foreground/60 transition-colors mb-8">
+              Crafting architectural sanctuaries through the transformative power of Shou Sugi Ban. Built in Rockhampton for Queensland's most discerning landscapes.
             </p>
+
+            <Button
+              onClick={() => setNewsletterOpen(true)}
+              variant="outline"
+              className="border-primary/30 text-primary hover:bg-primary/10 hover:border-primary px-6 py-3"
+            >
+              Join The Cubic Journal
+            </Button>
           </div>
           
           <div>
@@ -46,7 +58,7 @@ export const Footer = () => {
         
         <div className="flex flex-col md:flex-row items-center justify-between pt-12 border-t border-white/5 gap-8">
           <div className="text-xs text-foreground/20 font-sans uppercase tracking-[0.2em] font-bold italic transition-colors hover:text-foreground/40">
-            © 2026 Forged by Fire · Australian Built
+            © 2026 Cubic Homes · Built in Rockhampton, QLD
           </div>
           <div className="flex items-center gap-8 text-xs text-foreground/20 font-sans uppercase tracking-[0.2em] font-bold italic transition-colors hover:text-foreground/40">
             <span className="text-primary italic tracking-widest leading-none block border border-primary/20 py-1 px-3 rounded-full hover:border-primary/50 transition-all duration-500">
@@ -55,7 +67,9 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-      
+
+      <NewsletterModal open={newsletterOpen} onOpenChange={setNewsletterOpen} />
+
       {/* Background glow accent */}
       <div className="absolute -bottom-64 -right-64 w-[512px] h-[512px] bg-primary/5 blur-[128px] rounded-full z-0"></div>
     </footer>

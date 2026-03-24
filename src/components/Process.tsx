@@ -10,27 +10,27 @@ export const Process = () => {
     {
       id: '02',
       title: 'Bespoke Design',
-      description: 'No templates. No compromises. Your Forged by Fire home is drafted from first principles — with Shou Sugi Ban cladding customised in texture, depth, and finish to match your vision.',
+      description: 'No templates. No compromises. Your Cubic home is drafted from first principles — with Shou Sugi Ban cladding customised in texture, depth, and finish to match your vision and Queensland climate.',
     },
     {
       id: '03',
       title: 'Precision Fabrication',
-      description: 'Each module is built in our precision facility with aircraft-grade precision. Every joint, every surface, every detail reviewed before it leaves our workshop.',
+      description: 'Each module is built in our Rockhampton facility with aircraft-grade precision. Every joint, every surface, every detail reviewed before it leaves our workshop.',
     },
     {
       id: '04',
-      title: 'Delivered Across Australia',
-      description: 'From the Capricorn Coast to the Whitsundays, the Granite Belt to the Gulf — we deliver and install across all of Australia with a dedicated project manager by your side.',
+      title: 'Delivered Across Queensland',
+      description: 'From the Capricorn Coast to the Whitsundays, Mackay to Gladstone, Emerald to the Gulf — we deliver and install across Central Queensland with a dedicated project manager by your side.',
     },
     {
       id: '05',
       title: 'Concierge Aftercare',
-      description: 'Our relationship does not end at handover. We offer a 10-year structural warranty and ongoing maintenance concierge for every Forged by Fire home in our family.',
+      description: 'Our relationship does not end at handover. We offer a 10-year structural warranty and ongoing maintenance concierge for every Cubic home in our family across Queensland.',
     },
     {
       id: '06',
       title: 'Investment Certainty',
-      description: 'Forged by Fire homes are engineered for premium Airbnb returns and long-term capital appreciation. We can connect you with property managers who specialise in architectural retreat assets.',
+      description: 'Cubic homes are engineered for premium Airbnb returns and long-term capital appreciation. We can connect you with Queensland property managers who specialise in architectural retreat assets.',
     },
   ];
 
@@ -39,13 +39,13 @@ export const Process = () => {
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8">
           <div className="max-w-3xl">
-            <span className="text-primary font-serif italic mb-4 block tracking-wide">Our Process · Australia Wide</span>
+            <span className="text-primary font-serif italic mb-4 block tracking-wide">Our Process · Queensland Focused</span>
             <h2 className="text-4xl md:text-6xl font-serif font-bold mb-8 tracking-tight leading-tight">
               From vision to sanctuary — <br />
               every <span className="fire-text italic">step</span> considered
             </h2>
             <p className="text-foreground/60 text-lg md:text-xl font-sans max-w-xl">
-              We are Australia's specialists in luxury Shou Sugi Ban architecture. Our process is unhurried, personal, and built around your outcome.
+              We are Central Queensland's specialists in luxury Shou Sugi Ban architecture. Our process is unhurried, personal, and built around your outcome.
             </p>
           </div>
         </div>

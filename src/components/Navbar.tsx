@@ -25,9 +25,9 @@ export const Navbar = () => {
       <div className="container mx-auto px-6 flex items-center justify-between">
         <a href="#" className="flex items-center gap-2 group">
           <div className="w-8 h-8 bg-primary rotate-45 flex items-center justify-center transition-transform group-hover:rotate-[135deg] duration-500">
-            <div className="-rotate-45 font-serif font-bold text-background text-xl">F</div>
+            <div className="-rotate-45 font-serif font-bold text-background text-xl">C</div>
           </div>
-          <span className="font-serif text-xl tracking-tight font-semibold">Forged by Fire</span>
+          <span className="font-serif text-xl tracking-tight font-semibold">Cubic Homes</span>
         </a>
 
         <div className="hidden md:flex items-center gap-8">
@@ -45,7 +45,7 @@ export const Navbar = () => {
             variant="outline"
             className="border-primary text-primary hover:bg-primary hover:text-white transition-all duration-300"
           >
-            <a href="#contact">Touch the Timber</a>
+            <a href="#contact">Begin Your Story</a>
           </Button>
         </div>
 

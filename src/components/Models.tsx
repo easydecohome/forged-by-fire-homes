@@ -5,28 +5,31 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from './ui/card'
 export const Models = () => {
   const models = [
     {
-      id: 'ember',
-      name: 'The Ember',
-      tagline: 'For the solitary visionary',
-      description: 'A singular architectural statement. Compact in footprint, limitless in character.',
-      price: 'From $185K',
+      id: 'caldera',
+      name: 'The Caldera',
+      tagline: 'Born from the fire',
+      description: 'A compact sanctuary for solo living or intimate escapes. 38-55 sqm of fire-forged beauty. Perfect for private land or high-yield short stays across Central Queensland.',
+      price: 'From $165K',
+      features: ['38-55 sqm', '1 bed + ensuite', 'Full kitchen', 'Off-grid ready', 'Shou Sugi Ban cladding'],
       image: 'https://images.unsplash.com/photo-1761470484741-badac5364858?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
     },
     {
-      id: 'sovereign',
-      name: 'The Sovereign',
-      tagline: 'The flagship sanctuary',
-      description: 'Our most expansive dwelling. Where Japanese craftsmanship meets luxury.',
-      price: 'From $295K',
+      id: 'hearth',
+      name: 'The Hearth',
+      tagline: 'Where stories gather',
+      description: 'Our most commissioned model. 50-70 sqm designed for families, investors, and retreat owners. The architectural cabin that pays for itself through premium Airbnb returns.',
+      price: 'From $215K',
+      features: ['50-70 sqm', '1-2 beds configurable', 'Biophilic design', 'Solar + battery', 'Investment-grade finishes'],
       image: 'https://images.unsplash.com/photo-1568659585069-facb248c4935?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
       featured: true,
     },
     {
-      id: 'refuge',
-      name: 'The Refuge',
-      tagline: 'Retreat. Restore. Return.',
-      description: 'Designed for eco-luxury retreats and premium Airbnb investment properties across Australia.',
-      price: 'From $235K',
+      id: 'ridgeline',
+      name: 'The Ridgeline',
+      tagline: 'Built for the horizon',
+      description: 'Our flagship design. 65-90 sqm of luxury timber architecture. Two bedrooms, study, and panoramic living. For those who refuse to compromise on craft, character, or Queensland views.',
+      price: 'From $285K',
+      features: ['65-90 sqm', '2 beds + study', 'Chef kitchen', 'Premium interiors', '10-year warranty'],
       image: 'https://images.unsplash.com/photo-1627750673372-ceabdbeb768c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
     },
   ];
@@ -42,7 +45,7 @@ export const Models = () => {
               forged in <span className="fire-text italic">fire</span>
             </h2>
             <p className="text-foreground/60 text-lg md:text-xl font-sans max-w-xl">
-              Each Forged by Fire home is a bespoke commission — built to your land, your vision, and your life. No two homes are identical. Every surface tells a story only fire can write.
+              Each Cubic home is a bespoke commission — built to your land, your vision, and your life in Queensland. No two homes are identical. Every surface tells a story only fire can write.
             </p>
           </div>
         </div>

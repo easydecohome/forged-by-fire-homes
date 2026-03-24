@@ -4,43 +4,43 @@ import { Button } from './ui/button';
 export const Pricing = () => {
   const models = [
     {
-      name: 'The Ember',
-      tagline: 'A singular architectural sanctuary for solo living, creative studios, or high-yield short stays.',
-      price: '$185,000',
+      name: 'The Caldera',
+      tagline: 'A compact sanctuary for solo living or intimate escapes. Perfect for Central Queensland living or high-yield Airbnb.',
+      price: '$165,000',
       features: [
         '38–55 sqm floor plan',
         '1 bedroom with ensuite',
         'Full kitchen — premium appliances',
         'Authentic Shou Sugi Ban cladding',
         'Off-grid solar & water ready',
-        'Delivered & installed across Australia',
+        'Delivered & installed across QLD',
       ],
     },
     {
-      name: 'The Sovereign',
-      tagline: 'Our flagship commission — the highest expression of Shou Sugi Ban luxury architecture.',
-      price: '$295,000',
+      name: 'The Hearth',
+      tagline: 'Our most commissioned model. Perfect for families, investors, and retreat owners seeking architectural distinction.',
+      price: '$215,000',
       featured: true,
-      features: [
-        '65–90 sqm floor plan',
-        '2 bedrooms + study/retreat',
-        'Chef kitchen with stone benchtops',
-        'Solar+ with battery storage',
-        'Premium interior finish package',
-        'Landscaping consultation included',
-      ],
-    },
-    {
-      name: 'The Refuge',
-      tagline: 'Crafted for eco-luxury retreat owners and Airbnb investors seeking architectural distinction.',
-      price: '$235,000',
       features: [
         '50–70 sqm floor plan',
         '1–2 bedrooms configurable',
         'Biophilic living & dining space',
-        'Net-zero energy package',
-        'Shou Sugi Ban feature walls (interior)',
+        'Solar+ with battery storage',
+        'Investment-grade finishes',
         '10-year structural warranty',
+      ],
+    },
+    {
+      name: 'The Ridgeline',
+      tagline: 'Our flagship design. The highest expression of Shou Sugi Ban luxury for Queensland landscapes.',
+      price: '$285,000',
+      features: [
+        '65–90 sqm floor plan',
+        '2 bedrooms + study/retreat',
+        'Chef kitchen with stone benchtops',
+        'Premium interior finish package',
+        'Shou Sugi Ban feature walls',
+        'Landscaping consultation included',
       ],
     },
   ];
@@ -56,7 +56,7 @@ export const Pricing = () => {
               fully costed
             </h2>
             <p className="text-foreground/60 text-lg md:text-xl font-sans max-w-xl">
-              All-inclusive pricing: design, Shou Sugi Ban cladding, fabrication, delivery and installation across Australia. No hidden costs. No surprises.
+              All-inclusive pricing: design, Shou Sugi Ban cladding, fabrication, delivery and installation across Central Queensland. No hidden costs. No surprises.
             </p>
           </div>
         </div>
@@ -102,7 +102,7 @@ export const Pricing = () => {
         </div>
         
         <p className="text-xs text-foreground/20 mt-12 text-center font-sans uppercase tracking-[0.2em] font-bold reveal reveal-delay-4 leading-relaxed italic">
-          All pricing is indicative and subject to site assessment. Finance options available. Built in Australia.
+          All pricing is indicative and subject to site assessment. Finance options available. Built in Rockhampton, QLD.
         </p>
       </div>
     </section>

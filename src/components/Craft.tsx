@@ -8,7 +8,7 @@ export const Craft = () => {
     },
     {
       title: 'Resilience as Aesthetic',
-      description: 'The charring process creates a natural barrier against moisture, insects, UV degradation, and fire. In Australia\'s harsh landscapes, this is not just beautiful — it is engineered longevity without chemicals.',
+      description: 'The charring process creates a natural barrier against moisture, insects, UV degradation, and fire. In Queensland\'s heat, storms, and humidity, this is not just beautiful — it is engineered longevity without chemicals.',
     },
     {
       title: 'Ages Backwards',
@@ -42,7 +42,7 @@ export const Craft = () => {
                 In feudal Japan, craftsmen discovered that flame — the very thing timber fears most — is also its greatest protector. By charring the outer layer of cedar planks, they created a surface so dense and mineralised it repelled weather, pests, and decay for generations.
               </p>
               <p>
-                At Forged by Fire, we apply this ancient wisdom to every facade we build — not as a stylistic nod, but as a genuine commitment to materials that mean something. The result is a home whose exterior tells a story of transformation; where destruction and beauty are revealed as the same act.
+                At Cubic Homes, we forge every facade in fire — not as a design trend, but as an investment in longevity. Shou Sugi Ban is Queensland timber transformed: darker than night, harder than rain, more beautiful with every passing season. In Rockhampton's heat and Central Queensland's storms, your home becomes more resilient, not less. This is what heritage looks like.
               </p>
             </div>
             
@@ -51,7 +51,7 @@ export const Craft = () => {
                 "Fire does not destroy this timber. It preserves it — and in doing so, makes it more beautiful than it was before."
               </blockquote>
               <cite className="block mt-4 text-xs uppercase tracking-[0.2em] font-bold text-foreground/30 font-sans not-italic transition-colors group-hover:text-foreground/50">
-                The Forged by Fire Philosophy
+                The Cubic Homes Philosophy
               </cite>
             </div>
           </div>
@@ -86,7 +86,7 @@ export const Craft = () => {
               <div key={idx} className={`reveal reveal-delay-${idx + 1} overflow-hidden rounded-2xl aspect-[4/5] group cursor-pointer border border-white/5 hover:border-primary/20 transition-all duration-700 hover:shadow-fire`}>
                 <img
                   src={img}
-                  alt={`Forged by Fire Interior ${idx + 1}`}
+                  alt={`Cubic Homes Interior ${idx + 1}`}
                   className="w-full h-full object-cover transition-all duration-1000 grayscale group-hover:grayscale-0 group-hover:scale-110 opacity-80 group-hover:opacity-100"
                 />
               </div>
