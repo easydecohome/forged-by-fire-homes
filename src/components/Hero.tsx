@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Button } from './ui/button';
 import { StatsBar } from './StatsBar';
 
@@ -98,7 +98,7 @@ const FireCanvas: React.FC = () => {
   );
 };
 
-// Animated headline word-by-word
+// Animated headline word-by-word — updated copy per brief
 const AnimatedHeadline: React.FC = () => {
   const words = [
     { text: 'Luxury', fire: false },
@@ -220,6 +220,50 @@ const FloatingBadges: React.FC = () => {
   );
 };
 
+// Sticky "Explore Models" CTA button — appears after scrolling past hero
+const StickyExploreCTA: React.FC = () => {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show after scrolling 80% of viewport height
+      setVisible(window.scrollY > window.innerHeight * 0.8);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToModels = () => {
+    document.getElementById('ourwork')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          className="fixed top-20 right-6 z-[60] hidden md:block"
+          initial={{ opacity: 0, x: 60 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 60 }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <motion.button
+            onClick={scrollToModels}
+            className="flex items-center gap-2 px-5 py-3 bg-primary text-white font-serif font-bold text-sm rounded-xl fire-glow shadow-2xl border border-primary/30"
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
+              <path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Explore Models
+          </motion.button>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
 export const Hero: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] });
@@ -249,6 +293,7 @@ export const Hero: React.FC = () => {
     <>
       <ScrollProgressBar />
       <CursorGlow />
+      <StickyExploreCTA />
     <section ref={sectionRef} className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden">
       {/* Parallax Background */}
       <motion.div className="absolute inset-0 z-0" style={{ y: bgY }}>
@@ -339,10 +384,13 @@ export const Hero: React.FC = () => {
             <Button
               size="lg"
               variant="outline"
-              className="px-10 py-7 text-lg border-white/20 text-white hover:bg-white/10 backdrop-blur-sm transition-all duration-500"
-              onClick={() => document.getElementById('thematerial')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-10 py-7 text-lg border-white/20 text-white hover:bg-white/10 backdrop-blur-sm transition-all duration-500 flex items-center gap-2"
+              onClick={() => document.getElementById('ourwork')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              The Material Story
+              Explore Models
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </Button>
           </motion.div>
         </motion.div>
