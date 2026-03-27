@@ -4,10 +4,10 @@ import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
-  { label: 'Our Work', href: '#ourwork' },
+  { label: 'Models', href: '#ourwork' },
+  { label: 'Council Approval', href: '#council-roadmap' },
   { label: 'The Material', href: '#thematerial' },
   { label: 'Process', href: '#process' },
-  { label: 'Testimonials', href: '#testimonials' },
   { label: 'Investment', href: '#investment' },
 ];
 

@@ -71,7 +71,7 @@ export const CouncilApprovalRoadmap: React.FC = () => {
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section ref={ref} id="council-approval" className="py-24 md:py-36 bg-background relative overflow-hidden">
+    <section ref={ref} id="council-roadmap" className="py-24 md:py-36 bg-background relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(217,119,6,0.05)_0,transparent_60%)] pointer-events-none" />
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
