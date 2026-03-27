@@ -22,7 +22,7 @@ import { TrustStrip } from './components/TrustStrip';
 import { CouncilApprovalRoadmap } from './components/CouncilApprovalRoadmap';
 import { TotalCostBreakdown } from './components/TotalCostBreakdown';
 import { DeliveryMap } from './components/DeliveryMap';
-import EnvironmentalBenefits from './components/EnvironmentalBenefits';
+// import EnvironmentalBenefits from './components/EnvironmentalBenefits';
 
 // Simple client-side router
 function useRoute() {
@@ -80,7 +80,6 @@ function HomePage() {
       <Models />
       <LifestyleTransform />
       <FloorPlanExplorer />
-      <EnvironmentalBenefits />
       <Craft />
       <ShousugiBanStory />
       <Process />
