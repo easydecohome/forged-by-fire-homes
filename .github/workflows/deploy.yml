@@ -17,21 +17,22 @@ jobs:
         uses: actions/checkout@v4
 
       - name: ⎔ Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: 📥 Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: ⚙️ Build project
         run: npm run build
 
-      - name: 🚀 Deploy to GitHub Pages
+      - name: 🚀 Deploy
+        # Example using a common deploy action from the Marketplace
         uses: peaceiris/actions-gh-pages@v4
         if: github.ref == 'refs/heads/main'
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: gh-pages
+          # Secrets are used to store sensitive information like API tokens
+          api_token: ${{ secrets.DEPLOY_API_TOKEN }}
+        
+          environment_url: https://easydecohome.github.io/forged-by-fire-homes/
