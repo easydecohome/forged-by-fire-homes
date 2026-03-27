@@ -24,6 +24,8 @@ import { TotalCostBreakdown } from './components/TotalCostBreakdown';
 import { DeliveryMap } from './components/DeliveryMap';
 import { EnvironmentalSection } from './components/EnvironmentalSection';
 import { FinanceOptions } from './components/FinanceOptions';
+import { MeetTheTeam } from './components/MeetTheTeam';
+import { ClientMap } from './components/ClientMap';
 import { ShousugiBanHistoryPage } from './pages/ShousugiBanHistoryPage';
 
 // Simple client-side router
@@ -87,6 +89,8 @@ function HomePage() {
       <EnvironmentalSection />
       <ShousugiBanStory />
       <Process />
+      <MeetTheTeam />
+      <ClientMap />
       <SocialProof />
       <ROICalculator />
       <Pricing />
