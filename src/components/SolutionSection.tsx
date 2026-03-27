@@ -1,116 +1,56 @@
-import React, { useRef, useState } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 
-const problems = [
+const comparisons = [
   {
-    icon: '🏦',
-    problem: 'Traditional housing is out of reach',
-    solution: 'Own a fully-built architectural home from $185K — no stamp duty, no agent fees, no compromise.',
+    topic: 'Entry Cost',
+    traditional: 'Median house price $850K–$1.2M + stamp duty + agent fees',
+    forged: 'From $185K fully built & delivered. No stamp duty. No agent.',
     stat: '$185K',
     statLabel: 'Starting price',
-    color: 'from-amber-900/20 to-transparent',
   },
   {
-    icon: '⏳',
-    problem: 'Building takes years of stress',
-    solution: 'Your sanctuary is delivered and installed in 12–16 weeks. Move in before the season changes.',
+    topic: 'Build Timeline',
+    traditional: '12–24 months. Delays, cost blowouts, endless decisions.',
+    forged: 'Delivered and installed in 16 weeks. Move in before the season changes.',
     stat: '16wks',
     statLabel: 'Avg. delivery',
-    color: 'from-orange-900/20 to-transparent',
   },
   {
-    icon: '🌿',
-    problem: 'Rental income is unpredictable',
-    solution: 'Our clients average $1,200–$2,800/week on Airbnb. Your home pays for itself.',
+    topic: 'Income Potential',
+    traditional: 'Rental yield 3–4% gross. Negative gearing. Vacancy risk.',
+    forged: 'Airbnb yield 18–28% gross. Clients average $1,200–$2,800/week.',
     stat: '$2.8K',
     statLabel: 'Weekly Airbnb avg.',
-    color: 'from-amber-800/20 to-transparent',
   },
   {
-    icon: '🔋',
-    problem: 'Rising energy costs eat into savings',
-    solution: 'Every home is off-grid ready — solar, battery, rainwater. Energy bills become optional.',
+    topic: 'Energy Bills',
+    traditional: '$200–$600/month grid dependency. Rising costs, zero control.',
+    forged: 'Off-grid ready — solar, battery, rainwater. Energy bills become optional.',
     stat: '$0',
     statLabel: 'Energy bill potential',
-    color: 'from-yellow-900/20 to-transparent',
   },
   {
-    icon: '🏡',
-    problem: 'You want land but can\'t afford to build',
-    solution: 'Already own land? We deliver a complete turnkey home. Your land, our craft, your freedom.',
+    topic: 'Land Requirement',
+    traditional: 'Buy land AND build. Double the capital outlay.',
+    forged: 'Already own land? We deliver a complete turnkey home. Your land, our craft.',
     stat: '100%',
     statLabel: 'Turnkey delivery',
-    color: 'from-amber-900/20 to-transparent',
   },
   {
-    icon: '🌏',
-    problem: 'Conventional homes damage the environment',
-    solution: 'Shou Sugi Ban cladding lasts 75+ years with zero paint, zero maintenance, zero landfill.',
+    topic: 'Environmental Impact',
+    traditional: 'Conventional construction: high embodied carbon, short lifespan.',
+    forged: 'Shou Sugi Ban cladding lasts 75+ years. 85% lower carbon vs. conventional.',
     stat: '75yr+',
     statLabel: 'Material lifespan',
-    color: 'from-orange-800/20 to-transparent',
   },
 ];
 
-const SolutionCard: React.FC<{ item: typeof problems[0]; index: number }> = ({ item, index }) => {
-  const [flipped, setFlipped] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-60px' });
-
-  return (
-    <motion.div
-      ref={ref}
-      className="relative cursor-pointer"
-      initial={{ opacity: 0, y: 40 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.08 }}
-      style={{ perspective: 1000 }}
-      onClick={() => setFlipped(!flipped)}
-    >
-      <motion.div
-        className="relative w-full h-52"
-        animate={{ rotateY: flipped ? 180 : 0 }}
-        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-        style={{ transformStyle: 'preserve-3d' }}
-      >
-        {/* Front */}
-        <div
-          className={`absolute inset-0 rounded-2xl border border-white/8 bg-gradient-to-br ${item.color} bg-card/30 p-6 flex flex-col justify-between backface-hidden`}
-          style={{ backfaceVisibility: 'hidden' }}
-        >
-          <div>
-            <div className="text-3xl mb-3">{item.icon}</div>
-            <p className="text-foreground/50 text-sm font-sans leading-relaxed line-through decoration-primary/40">{item.problem}</p>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-primary/60 font-sans uppercase tracking-widest">Tap to see the solution</span>
-            <div className="w-6 h-6 rounded-full border border-primary/30 flex items-center justify-center">
-              <span className="text-primary text-xs">→</span>
-            </div>
-          </div>
-        </div>
-        {/* Back */}
-        <div
-          className="absolute inset-0 rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/10 to-card/40 p-6 flex flex-col justify-between"
-          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
-        >
-          <p className="text-foreground text-base font-sans leading-relaxed">{item.solution}</p>
-          <div className="flex items-end justify-between">
-            <div>
-              <div className="text-3xl font-serif font-bold text-primary">{item.stat}</div>
-              <div className="text-xs text-foreground/40 uppercase tracking-widest font-sans">{item.statLabel}</div>
-            </div>
-            <span className="text-xs text-primary/60 font-sans uppercase tracking-widest">Tap to flip back</span>
-          </div>
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-};
-
 export const SolutionSection: React.FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLDivElement>(null);
   const inView = useInView(headerRef, { once: true, margin: '-80px' });
+  const tableInView = useInView(tableRef, { once: true, margin: '-80px' });
 
   return (
     <section className="py-24 md:py-36 bg-background relative overflow-hidden">
@@ -118,6 +58,7 @@ export const SolutionSection: React.FC = () => {
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
       <div className="container mx-auto px-6">
+        {/* Header */}
         <motion.div
           ref={headerRef}
           className="max-w-3xl mb-16"
@@ -139,15 +80,87 @@ export const SolutionSection: React.FC = () => {
             You need a <span className="fire-text italic">smarter home.</span>
           </h2>
           <p className="text-foreground/60 text-lg md:text-xl font-sans leading-relaxed">
-            We don't sell houses. We solve the problems that conventional housing creates — financial stress, environmental guilt, wasted land, and a life spent waiting to live. Tap each card to discover your solution.
+            We don't sell houses. We solve the problems that conventional housing creates — financial stress, environmental guilt, wasted land, and a life spent waiting to live.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {problems.map((item, i) => (
-            <SolutionCard key={i} item={item} index={i} />
-          ))}
-        </div>
+        {/* Comparison table */}
+        <motion.div
+          ref={tableRef}
+          initial={{ opacity: 0, y: 30 }}
+          animate={tableInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.2 }}
+        >
+          {/* Column headers */}
+          <div className="grid grid-cols-[1fr_1fr_1fr] gap-0 mb-3 hidden md:grid">
+            <div className="px-5 py-3">
+              <span className="text-xs uppercase tracking-widest font-bold text-foreground/30 font-sans">Category</span>
+            </div>
+            <div className="px-5 py-3 bg-red-950/20 rounded-tl-xl rounded-tr-none border border-red-500/10 border-b-0">
+              <div className="flex items-center gap-2">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="7" cy="7" r="6" stroke="rgba(239,68,68,0.5)" strokeWidth="1.2"/>
+                  <path d="M4 4l6 6M10 4L4 10" stroke="rgba(239,68,68,0.7)" strokeWidth="1.2" strokeLinecap="round"/>
+                </svg>
+                <span className="text-xs uppercase tracking-widest font-bold text-red-400/70 font-sans">Traditional Path</span>
+              </div>
+            </div>
+            <div className="px-5 py-3 bg-primary/10 rounded-tl-none rounded-tr-xl border border-primary/20 border-b-0">
+              <div className="flex items-center gap-2">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="7" cy="7" r="6" stroke="rgba(217,119,6,0.7)" strokeWidth="1.2"/>
+                  <path d="M4 7l2 2 4-4" stroke="rgba(217,119,6,0.9)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span className="text-xs uppercase tracking-widest font-bold text-primary font-sans">Forged by Fire Path</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Rows */}
+          <div className="space-y-0 rounded-2xl overflow-hidden border border-white/8">
+            {comparisons.map((row, i) => (
+              <motion.div
+                key={i}
+                className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr] gap-0 border-b border-white/6 last:border-b-0"
+                initial={{ opacity: 0, y: 15 }}
+                animate={tableInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.3 + i * 0.07, duration: 0.5 }}
+              >
+                {/* Topic */}
+                <div className="px-5 py-5 bg-background/60 flex items-center gap-3 border-b md:border-b-0 border-white/6">
+                  <div className="shrink-0 w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
+                    <span className="text-primary text-xs font-serif font-bold">{i + 1}</span>
+                  </div>
+                  <span className="text-sm font-bold font-sans text-foreground/80">{row.topic}</span>
+                </div>
+
+                {/* Traditional */}
+                <div className="px-5 py-5 bg-red-950/10 border-l border-red-500/8 flex items-start gap-3 border-b md:border-b-0 border-white/6">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0 mt-0.5">
+                    <circle cx="8" cy="8" r="7" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.4)" strokeWidth="1"/>
+                    <path d="M5 5l6 6M11 5L5 11" stroke="rgba(239,68,68,0.7)" strokeWidth="1.2" strokeLinecap="round"/>
+                  </svg>
+                  <p className="text-sm text-foreground/50 font-sans leading-relaxed">{row.traditional}</p>
+                </div>
+
+                {/* Forged by Fire */}
+                <div className="px-5 py-5 bg-primary/5 border-l border-primary/10 flex items-start gap-3">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0 mt-0.5">
+                    <circle cx="8" cy="8" r="7" fill="rgba(217,119,6,0.15)" stroke="rgba(217,119,6,0.5)" strokeWidth="1"/>
+                    <path d="M5 8l2 2 4-4" stroke="rgba(217,119,6,0.9)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <div className="flex-1">
+                    <p className="text-sm text-foreground/80 font-sans leading-relaxed">{row.forged}</p>
+                    <div className="mt-2 inline-flex items-center gap-1.5">
+                      <span className="text-base font-serif font-bold text-primary">{row.stat}</span>
+                      <span className="text-[9px] uppercase tracking-widest text-foreground/30 font-sans">{row.statLabel}</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
 
         {/* Bottom CTA */}
         <motion.div
