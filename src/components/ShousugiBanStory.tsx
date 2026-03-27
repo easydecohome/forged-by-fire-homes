@@ -1,37 +1,7 @@
 import React, { useRef, useState } from 'react';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 
-const timeline = [
-  {
-    era: '300 BCE',
-    title: 'Ancient Origins',
-    kanji: '起源',
-    description: 'Japanese cedar craftsmen in the Edo period discovered that controlled charring of sugi (Japanese cedar) planks created a surface impervious to moisture, insects, and decay. The technique spread across coastal fishing villages where timber longevity was survival.',
-    detail: 'The original process involved binding three planks into a triangular chimney shape, lighting a fire inside, and rotating the assembly to achieve even charring. This ancient ingenuity remains the gold standard today.',
-  },
-  {
-    era: '1600s',
-    title: 'Refinement & Mastery',
-    kanji: '精練',
-    description: 'During the Edo period, Shou Sugi Ban became a mark of architectural distinction. Master craftsmen developed three distinct char depths — each producing a different texture, finish, and level of protection.',
-    detail: 'Lightly charred "Shou" produces a silver-grey brushed finish. Medium "Sugi" creates deep black with visible grain. Heavy "Ban" yields a dramatic alligator-scale texture — the most striking and most protective of all.',
-  },
-  {
-    era: '1980s',
-    title: 'Western Discovery',
-    kanji: '発見',
-    description: 'European and American architects began importing Shou Sugi Ban panels, recognising the material\'s extraordinary combination of beauty and performance. The technique was reinterpreted for contemporary architecture.',
-    detail: 'The shift from traditional sugi cedar to other species — including Australian hardwoods — opened new aesthetic possibilities while maintaining the core preservation chemistry of the charring process.',
-  },
-  {
-    era: 'Today',
-    title: 'Australian Mastery',
-    kanji: '現代',
-    description: 'At Forged by Fire, we have spent years perfecting the application of Shou Sugi Ban to Australian hardwoods and climates. Our process is authentic, unhurried, and executed by craftsmen who understand the material at a molecular level.',
-    detail: 'We char each panel by hand, brush the surface to remove loose carbon, and finish with a penetrating natural oil. The result is a surface that will outlast the structure it protects — and grow more beautiful with every decade.',
-  },
-];
-
+// The 4 benefit cards — kept as per spec
 const charDepths = [
   {
     name: 'Lightly Charred',
@@ -63,82 +33,63 @@ const charDepths = [
   },
 ];
 
-const TimelineItem: React.FC<{ item: typeof timeline[0]; index: number }> = ({ item, index }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-60px' });
-  const [expanded, setExpanded] = useState(false);
+// 4 key benefit cards
+const benefits = [
+  {
+    title: 'Fire-Resistant',
+    description: 'The carbonised surface creates a natural fire barrier — the material that looks like it should burn is actually one of the most fire-resistant claddings available.',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 3C14 3 8 10 8 16a6 6 0 0012 0c0-6-6-13-6-13z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+        <path d="M11 19c0-2 1.5-4 3-4s3 2 3 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+      </svg>
+    ),
+    stat: 'BAL-29',
+    statLabel: 'Bushfire rated',
+  },
+  {
+    title: 'Weather-Proof',
+    description: 'The hydrophobic carbon layer actively repels water. No swelling, no warping, no rot — even in Queensland\'s most extreme wet seasons.',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 4C14 4 7 12 7 17a7 7 0 0014 0c0-5-7-13-7-13z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+        <path d="M10 20c1.5 1.5 6.5 1.5 8 0" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+      </svg>
+    ),
+    stat: '0%',
+    statLabel: 'Water absorption',
+  },
+  {
+    title: 'Pest-Resistant',
+    description: 'The oxygen-depleted carbonised layer is inhospitable to termites, borers, and the fungi that cause timber decay. No chemicals required — ever.',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="14" cy="14" r="10" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M9 9l10 10M19 9L9 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+    ),
+    stat: '0',
+    statLabel: 'Chemical preservatives',
+  },
+  {
+    title: 'Ages Beautifully',
+    description: 'Where standard cladding fades and fails, Shou Sugi Ban matures. Silver highlights emerge over decades. Time does not diminish it — it refines it.',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="14" cy="14" r="10" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M14 8v6l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+    ),
+    stat: '75yr+',
+    statLabel: 'Proven lifespan',
+  },
+];
 
-  return (
-    <motion.div
-      ref={ref}
-      className="relative flex gap-8 md:gap-16 group"
-      initial={{ opacity: 0, x: -30 }}
-      animate={inView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.7, delay: index * 0.1 }}
-    >
-      {/* Left: Era marker */}
-      <div className="flex flex-col items-center flex-shrink-0 w-24 md:w-32">
-        <motion.div
-          className="w-12 h-12 rounded-full border-2 border-primary/40 flex items-center justify-center bg-background relative z-10 group-hover:border-primary transition-colors duration-500"
-          whileHover={{ scale: 1.1 }}
-        >
-          <motion.div
-            className="absolute inset-0 rounded-full bg-primary/10"
-            animate={{ scale: [1, 1.4, 1], opacity: [0.5, 0, 0.5] }}
-            transition={{ duration: 3, repeat: Infinity, delay: index * 0.7 }}
-          />
-          <span className="text-primary font-serif font-bold text-xs">{item.era}</span>
-        </motion.div>
-        <motion.div
-          className="text-2xl md:text-3xl font-serif text-foreground/10 mt-3 group-hover:text-primary/20 transition-colors duration-500"
-        >
-          {item.kanji}
-        </motion.div>
-      </div>
-
-      {/* Right: Content */}
-      <div className="flex-1 pb-16">
-        <motion.h3
-          className="text-xl md:text-2xl font-serif font-bold mb-3 group-hover:text-primary transition-colors duration-300"
-          animate={{ color: inView ? undefined : 'rgba(255,255,255,0.3)' }}
-        >
-          {item.title}
-        </motion.h3>
-        <p className="text-foreground/60 text-sm md:text-base font-sans leading-relaxed mb-4">
-          {item.description}
-        </p>
-
-        <motion.button
-          onClick={() => setExpanded(!expanded)}
-          className="text-xs uppercase tracking-[0.2em] text-primary/60 hover:text-primary font-bold font-sans flex items-center gap-2 transition-colors"
-          whileHover={{ x: 3 }}
-        >
-          {expanded ? 'Less detail' : 'Craftsman\'s note'}
-          <motion.span animate={{ rotate: expanded ? 90 : 0 }} transition={{ duration: 0.3 }}>→</motion.span>
-        </motion.button>
-
-        <motion.div
-          className="overflow-hidden"
-          animate={{ height: expanded ? 'auto' : 0, opacity: expanded ? 1 : 0 }}
-          transition={{ duration: 0.4 }}
-        >
-          <div className="mt-4 pl-4 border-l border-primary/30 text-foreground/50 text-sm font-sans italic leading-relaxed">
-            {item.detail}
-          </div>
-        </motion.div>
-      </div>
-    </motion.div>
-  );
-};
-
-const CharDepthCard: React.FC<{ depth: typeof charDepths[0]; index: number }> = ({ depth, index }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-60px' });
+const CharDepthCard: React.FC<{ depth: typeof charDepths[0]; index: number; inView: boolean }> = ({ depth, index, inView }) => {
   const [hovered, setHovered] = useState(false);
 
   return (
     <motion.div
-      ref={ref}
       initial={{ opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.12 }}
@@ -204,25 +155,25 @@ const CharDepthCard: React.FC<{ depth: typeof charDepths[0]; index: number }> = 
 };
 
 export const ShousugiBanStory: React.FC = () => {
-  const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
+  const benefitsRef = useRef<HTMLDivElement>(null);
+  const charRef = useRef<HTMLDivElement>(null);
   const headerInView = useInView(headerRef, { once: true, margin: '-80px' });
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
-  const lineHeight = useTransform(scrollYProgress, [0.05, 0.7], ['0%', '100%']);
+  const benefitsInView = useInView(benefitsRef, { once: true, margin: '-80px' });
+  const charInView = useInView(charRef, { once: true, margin: '-80px' });
 
   return (
-    <section ref={sectionRef} id="shousugiban" className="py-24 md:py-40 bg-background relative overflow-hidden">
-      {/* Subtle background texture */}
+    <section id="shousugiban" className="py-24 md:py-40 bg-background relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(217,119,6,0.04)_0,transparent_70%)]" />
       </div>
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
       <div className="container mx-auto px-6 relative z-10">
-
         {/* Header */}
         <motion.div
           ref={headerRef}
-          className="max-w-4xl mb-24"
+          className="max-w-4xl mb-16"
           initial={{ opacity: 0, y: 40 }}
           animate={headerInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
@@ -234,7 +185,7 @@ export const ShousugiBanStory: React.FC = () => {
             transition={{ delay: 0.1 }}
           >
             <div className="h-[1px] w-12 bg-primary" />
-            <span className="text-primary font-serif italic tracking-wide text-sm">焼き杉 · The Complete Story</span>
+            <span className="text-primary font-serif italic tracking-wide text-sm">焼き杉 · Shou Sugi Ban</span>
           </motion.div>
 
           <h2 className="text-5xl md:text-7xl font-serif font-bold tracking-tight leading-[0.95] mb-8">
@@ -244,14 +195,24 @@ export const ShousugiBanStory: React.FC = () => {
             <span className="text-foreground/40">perfecting timber.</span>
           </h2>
 
-          <p className="text-foreground/60 text-xl md:text-2xl font-sans leading-relaxed max-w-2xl">
-            Shou Sugi Ban is not a trend. It is an ancient technology that has been proven across three centuries of Japanese coastal architecture — and is now the defining material of Australia's most distinguished homes.
+          <p className="text-foreground/60 text-xl md:text-2xl font-sans leading-relaxed max-w-2xl mb-8">
+            Shou Sugi Ban is not a trend. It is an ancient Japanese technology proven across three centuries of coastal architecture — and now the defining material of Australia's most distinguished tiny homes.
           </p>
+
+          {/* Link to full history page */}
+          <motion.a
+            href="/shou-sugi-ban-history"
+            className="inline-flex items-center gap-3 text-primary font-serif font-bold text-base border-b border-primary/30 pb-0.5 hover:border-primary transition-colors"
+            whileHover={{ x: 4 }}
+            transition={{ duration: 0.2 }}
+          >
+            Read the full 300-year history →
+          </motion.a>
         </motion.div>
 
         {/* Pull quote */}
         <motion.div
-          className="mb-24 relative"
+          className="mb-20 relative"
           initial={{ opacity: 0 }}
           animate={headerInView ? { opacity: 1 } : {}}
           transition={{ delay: 0.3 }}
@@ -265,41 +226,46 @@ export const ShousugiBanStory: React.FC = () => {
           </cite>
         </motion.div>
 
-        {/* Timeline */}
-        <div className="mb-32">
-          <motion.h3
-            className="text-2xl md:text-3xl font-serif font-bold mb-16 text-foreground/70"
-            initial={{ opacity: 0 }}
-            animate={headerInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.4 }}
-          >
-            A history of mastery
-          </motion.h3>
-
-          <div className="relative">
-            {/* Animated vertical line */}
-            <div className="absolute left-[47px] md:left-[63px] top-6 bottom-6 w-[1px] bg-white/5">
-              <motion.div
-                className="w-full bg-gradient-to-b from-primary via-primary/60 to-primary/10"
-                style={{ height: lineHeight }}
-              />
-            </div>
-
-            <div className="space-y-0">
-              {timeline.map((item, i) => (
-                <TimelineItem key={item.era} item={item} index={i} />
-              ))}
-            </div>
+        {/* 4 Benefit Cards */}
+        <motion.div
+          ref={benefitsRef}
+          className="mb-20"
+          initial={{ opacity: 0 }}
+          animate={benefitsInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="flex items-center gap-4 mb-10">
+            <div className="h-[1px] w-12 bg-primary" />
+            <h3 className="text-2xl md:text-3xl font-serif font-bold">Why Shou Sugi Ban Outperforms Everything</h3>
           </div>
-        </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {benefits.map((benefit, i) => (
+              <motion.div
+                key={i}
+                className="p-6 rounded-2xl border border-primary/15 bg-gradient-to-br from-primary/5 to-card/20 hover:border-primary/30 hover:bg-primary/8 transition-all duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                animate={benefitsInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                whileHover={{ y: -4 }}
+              >
+                <div className="text-primary mb-4">{benefit.icon}</div>
+                <h4 className="text-lg font-serif font-bold text-foreground mb-2">{benefit.title}</h4>
+                <p className="text-sm text-foreground/50 font-sans leading-relaxed mb-4">{benefit.description}</p>
+                <div className="border-t border-white/8 pt-3 flex items-baseline gap-2">
+                  <span className="text-xl font-serif font-bold text-primary">{benefit.stat}</span>
+                  <span className="text-[10px] uppercase tracking-widest text-foreground/30 font-sans">{benefit.statLabel}</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
 
         {/* Char Depths */}
-        <div>
+        <div ref={charRef}>
           <motion.div
             className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6"
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
+            animate={charInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
             <div>
@@ -315,61 +281,63 @@ export const ShousugiBanStory: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {charDepths.map((depth, i) => (
-              <CharDepthCard key={depth.name} depth={depth} index={i} />
+              <CharDepthCard key={depth.name} depth={depth} index={i} inView={charInView} />
             ))}
           </div>
         </div>
 
-        {/* Science section */}
+        {/* Science stats */}
         <motion.div
-          className="mt-24 grid grid-cols-1 md:grid-cols-2 gap-16 items-center"
+          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-4"
           initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.7 }}
+          animate={charInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.4, duration: 0.7 }}
+        >
+          {[
+            { stat: '75–100+', unit: 'years', label: 'Service life without maintenance' },
+            { stat: '3–5×', unit: 'longer', label: 'Than treated pine cladding' },
+            { stat: '0', unit: 'chemicals', label: 'Required for preservation' },
+            { stat: '300', unit: 'years', label: 'Of proven performance' },
+          ].map((item, i) => (
+            <motion.div
+              key={item.label}
+              className="p-6 rounded-2xl border border-white/5 bg-card/30 hover:border-primary/20 transition-all duration-500 group text-center"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={charInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ delay: 0.5 + i * 0.1 }}
+              whileHover={{ y: -4 }}
+            >
+              <div className="text-3xl font-serif font-bold text-primary mb-1 group-hover:scale-105 transition-transform duration-300 origin-center">
+                {item.stat}
+              </div>
+              <div className="text-xs uppercase tracking-widest text-foreground/30 font-bold font-sans mb-2">{item.unit}</div>
+              <div className="text-xs text-foreground/50 font-sans italic leading-relaxed">{item.label}</div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Link to full history page */}
+        <motion.div
+          className="mt-16 p-8 md:p-12 rounded-3xl border border-primary/15 bg-gradient-to-br from-primary/5 to-card/20 flex flex-col md:flex-row items-center justify-between gap-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={charInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.7, duration: 0.6 }}
         >
           <div>
-            <span className="text-primary font-serif italic mb-4 block text-sm tracking-widest uppercase">The Science</span>
-            <h3 className="text-3xl md:text-4xl font-serif font-bold mb-6 leading-tight">
-              Why fire is the world's oldest preservative
-            </h3>
-            <div className="space-y-5 text-foreground/60 font-sans text-base leading-relaxed">
-              <p>
-                When timber is charred to a depth of 2–5mm, the surface undergoes a fundamental chemical transformation. The carbon layer that forms is hydrophobic — it actively repels water rather than absorbing it.
-              </p>
-              <p>
-                This carbonised layer also creates an oxygen-depleted environment that is inhospitable to insects, fungi, and the bacteria that cause rot. No pesticides. No synthetic preservatives. Just chemistry.
-              </p>
-              <p>
-                The result is a material with a service life of 75–100+ years — three to five times longer than treated pine — that requires zero chemical maintenance and becomes more visually distinguished with age.
-              </p>
-            </div>
+            <h3 className="text-2xl md:text-3xl font-serif font-bold mb-2">Curious about the full history?</h3>
+            <p className="text-foreground/60 font-sans">Explore the complete 300-year story of Shou Sugi Ban — from Edo period fishing villages to contemporary Australian architecture.</p>
           </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            {[
-              { stat: '75–100+', unit: 'years', label: 'Service life without maintenance' },
-              { stat: '3–5×', unit: 'longer', label: 'Than treated pine cladding' },
-              { stat: '0', unit: 'chemicals', label: 'Required for preservation' },
-              { stat: '300', unit: 'years', label: 'Of proven performance' },
-            ].map((item, i) => (
-              <motion.div
-                key={item.label}
-                className="p-6 rounded-2xl border border-white/5 bg-card/30 hover:border-primary/20 transition-all duration-500 group"
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -4 }}
-              >
-                <div className="text-3xl font-serif font-bold text-primary mb-1 group-hover:scale-105 transition-transform duration-300 origin-left">
-                  {item.stat}
-                </div>
-                <div className="text-xs uppercase tracking-widest text-foreground/30 font-bold font-sans mb-2">{item.unit}</div>
-                <div className="text-xs text-foreground/50 font-sans italic leading-relaxed">{item.label}</div>
-              </motion.div>
-            ))}
-          </div>
+          <motion.a
+            href="/shou-sugi-ban-history"
+            className="shrink-0 px-10 py-5 border border-primary/40 text-primary font-serif font-bold text-lg rounded-xl hover:bg-primary/10 transition-all duration-300 whitespace-nowrap flex items-center gap-3"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 10h14M10 3l7 7-7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Read the Full History
+          </motion.a>
         </motion.div>
       </div>
     </section>

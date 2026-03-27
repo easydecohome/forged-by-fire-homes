@@ -22,8 +22,9 @@ import { TrustStrip } from './components/TrustStrip';
 import { CouncilApprovalRoadmap } from './components/CouncilApprovalRoadmap';
 import { TotalCostBreakdown } from './components/TotalCostBreakdown';
 import { DeliveryMap } from './components/DeliveryMap';
-// import EnvironmentalBenefits from './components/EnvironmentalBenefits';
+import { EnvironmentalSection } from './components/EnvironmentalSection';
 import { FinanceOptions } from './components/FinanceOptions';
+import { ShousugiBanHistoryPage } from './pages/ShousugiBanHistoryPage';
 
 // Simple client-side router
 function useRoute() {
@@ -83,6 +84,7 @@ function HomePage() {
       <LifestyleTransform />
       <FloorPlanExplorer />
       <Craft />
+      <EnvironmentalSection />
       <ShousugiBanStory />
       <Process />
       <SocialProof />
@@ -103,10 +105,21 @@ function App() {
 
   const isFeatures = path === '/features' || path.includes('/features');
   const isProduct = path === '/product' || path.includes('/product');
+  const isShousugiBanHistory = path === '/shou-sugi-ban-history' || path.includes('/shou-sugi-ban-history');
 
   return (
     <AnimatePresence mode="wait">
-      {isProduct ? (
+      {isShousugiBanHistory ? (
+        <motion.div
+          key="shou-sugi-ban-history"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <ShousugiBanHistoryPage />
+        </motion.div>
+      ) : isProduct ? (
         <motion.div
           key="product"
           initial={{ opacity: 0 }}
