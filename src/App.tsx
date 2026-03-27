@@ -23,6 +23,7 @@ import { CouncilApprovalRoadmap } from './components/CouncilApprovalRoadmap';
 import { TotalCostBreakdown } from './components/TotalCostBreakdown';
 import { DeliveryMap } from './components/DeliveryMap';
 // import EnvironmentalBenefits from './components/EnvironmentalBenefits';
+import { FinanceOptions } from './components/FinanceOptions';
 
 // Simple client-side router
 function useRoute() {
@@ -76,6 +77,7 @@ function HomePage() {
       <CouncilApprovalRoadmap />
       <TotalCostBreakdown />
       <DeliveryMap />
+      <FinanceOptions />
       <SolutionSection />
       <Models />
       <LifestyleTransform />
