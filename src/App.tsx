@@ -19,6 +19,10 @@ import { SolutionSection } from './components/SolutionSection';
 import { LifestyleTransform } from './components/LifestyleTransform';
 import { FloorPlanExplorer } from './components/FloorPlanExplorer';
 import { TrustStrip } from './components/TrustStrip';
+import { CouncilApprovalRoadmap } from './components/CouncilApprovalRoadmap';
+import { TotalCostBreakdown } from './components/TotalCostBreakdown';
+import { DeliveryMap } from './components/DeliveryMap';
+import EnvironmentalBenefits from './components/EnvironmentalBenefits';
 
 // Simple client-side router
 function useRoute() {
@@ -69,10 +73,14 @@ function HomePage() {
       <Navbar />
       <Hero />
       <TrustStrip />
+      <CouncilApprovalRoadmap />
+      <TotalCostBreakdown />
+      <DeliveryMap />
       <SolutionSection />
       <Models />
       <LifestyleTransform />
       <FloorPlanExplorer />
+      <EnvironmentalBenefits />
       <Craft />
       <ShousugiBanStory />
       <Process />
