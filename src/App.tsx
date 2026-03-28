@@ -3,12 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Models } from './components/Models';
-import { Craft } from './components/Craft';
-import { ShousugiBanStory } from './components/ShousugiBanStory';
-import { Process } from './components/Process';
+// import { Craft } from './components/Craft';
+  // import { ShousugiBanStory } from './components/ShousugiBanStory';
+  // import { Process } from './components/Process';
 import { SocialProof } from './components/SocialProof';
-import { ROICalculator } from './components/ROICalculator';
-import { Pricing } from './components/Pricing';
+// import { ROICalculator } from './components/ROICalculator';
+  // import { Pricing } from './components/Pricing';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { FeaturesPage } from './pages/FeaturesPage';
@@ -17,16 +17,20 @@ import UrgencyBanner from './components/UrgencyBanner';
 import { NewsletterModal } from './components/NewsletterModal';
 import { SolutionSection } from './components/SolutionSection';
 import { LifestyleTransform } from './components/LifestyleTransform';
-import { FloorPlanExplorer } from './components/FloorPlanExplorer';
-import { TrustStrip } from './components/TrustStrip';
-import { CouncilApprovalRoadmap } from './components/CouncilApprovalRoadmap';
-import { TotalCostBreakdown } from './components/TotalCostBreakdown';
-import { DeliveryMap } from './components/DeliveryMap';
-import { EnvironmentalSection } from './components/EnvironmentalSection';
+  import { FloorPlanExplorer } from './components/FloorPlanExplorer';
+  import { TrustStrip } from './components/TrustStrip';
+  // import { CouncilApprovalRoadmap } from './components/CouncilApprovalRoadmap';
+  // import { TotalCostBreakdown } from './components/TotalCostBreakdown';
+  // import { DeliveryMap } from './components/DeliveryMap';
+// import { EnvironmentalSection } from './components/EnvironmentalSection';
 import { FinanceOptions } from './components/FinanceOptions';
-import { MeetTheTeam } from './components/MeetTheTeam';
-import { ClientMap } from './components/ClientMap';
+// import { MeetTheTeam } from './components/MeetTheTeam';
+  // import { ClientMap } from './components/ClientMap';
 import { ShousugiBanHistoryPage } from './pages/ShousugiBanHistoryPage';
+import { SpecificationsPage } from './pages/SpecificationsPage';
+import { ProcessPage } from './pages/ProcessPage';
+import { ShouSugiBanPage } from './pages/ShouSugiBanPage';
+import { InvestmentPage } from './pages/InvestmentPage';
 
 // Simple client-side router
 function useRoute() {
@@ -77,23 +81,11 @@ function HomePage() {
       <Navbar />
       <Hero />
       <TrustStrip />
-      <CouncilApprovalRoadmap />
-      <TotalCostBreakdown />
-      <DeliveryMap />
-      <FinanceOptions />
       <SolutionSection />
       <Models />
-      <LifestyleTransform />
       <FloorPlanExplorer />
-      <Craft />
-      <EnvironmentalSection />
-      <ShousugiBanStory />
-      <Process />
-      <MeetTheTeam />
-      <ClientMap />
+      <FinanceOptions />
       <SocialProof />
-      <ROICalculator />
-      <Pricing />
       <Contact />
       <Footer />
       {/* Global Background Glow Accents */}
@@ -110,10 +102,54 @@ function App() {
   const isFeatures = path === '/features' || path.includes('/features');
   const isProduct = path === '/product' || path.includes('/product');
   const isShousugiBanHistory = path === '/shou-sugi-ban-history' || path.includes('/shou-sugi-ban-history');
+  const isSpecifications = path === '/specifications' || path.includes('/specifications');
+  const isProcess = path === '/process' || path.includes('/process');
+  const isShouSugiBan = path === '/shou-sugi-ban' || path.includes('/shou-sugi-ban');
+  const isInvestment = path === '/investment' || path.includes('/investment');
 
   return (
     <AnimatePresence mode="wait">
-      {isShousugiBanHistory ? (
+      {isSpecifications ? (
+        <motion.div
+          key="specifications"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <SpecificationsPage />
+        </motion.div>
+      ) : isProcess ? (
+        <motion.div
+          key="process"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <ProcessPage />
+        </motion.div>
+      ) : isShouSugiBan ? (
+        <motion.div
+          key="shou-sugi-ban"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <ShouSugiBanPage />
+        </motion.div>
+      ) : isInvestment ? (
+        <motion.div
+          key="investment"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <InvestmentPage />
+        </motion.div>
+      ) : isShousugiBanHistory ? (
         <motion.div
           key="shou-sugi-ban-history"
           initial={{ opacity: 0 }}

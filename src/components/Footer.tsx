@@ -59,15 +59,15 @@ export const Footer: React.FC = () => {
             <h4 className="text-xs uppercase tracking-[0.2em] font-bold text-foreground/30 mb-8 font-sans">Explore</h4>
             <ul className="space-y-4">
               {[
-                { label: 'Our Work', id: 'ourwork' },
-                { label: 'The Material', id: 'thematerial' },
-                { label: 'Process', id: 'process' },
-                { label: 'Investment', id: 'investment' },
-                { label: 'Contact', id: 'contact' },
+                { label: 'Our Work', href: '#ourwork', isPage: false },
+                { label: 'Specifications', href: '/specifications', isPage: true },
+                { label: 'Council Approval', href: '/process', isPage: true },
+                { label: 'Shou Sugi Ban', href: '/shou-sugi-ban', isPage: true },
+                { label: 'Investment', href: '/investment', isPage: true },
               ].map((item) => (
                 <li key={item.label}>
                   <motion.button
-                    onClick={() => scrollTo(item.id)}
+                    onClick={() => item.isPage ? window.location.href = item.href : scrollTo(item.href.replace('#', ''))}
                     className="text-sm font-medium text-foreground/50 hover:text-primary transition-colors italic tracking-wide font-sans"
                     whileHover={{ x: 4 }}
                     transition={{ type: 'spring', stiffness: 300 }}

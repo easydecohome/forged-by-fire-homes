@@ -5,10 +5,10 @@ import { cn } from '@/lib/utils';
 
 const navLinks = [
   { label: 'Models', href: '#ourwork' },
-  { label: 'Council Approval', href: '#council-roadmap' },
-  { label: 'The Material', href: '#thematerial' },
-  { label: 'Process', href: '#process' },
-  { label: 'Investment', href: '#investment' },
+  { label: 'Specifications', href: '/specifications' },
+  { label: 'Council Approval', href: '/process' },
+  { label: 'Shou Sugi Ban', href: '/shou-sugi-ban' },
+  { label: 'Investment', href: '/investment' },
 ];
 
 export const Navbar: React.FC = () => {
@@ -37,8 +37,14 @@ export const Navbar: React.FC = () => {
   }, []);
 
   const scrollTo = (href: string) => {
-    const id = href.replace('#', '');
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    if (href.startsWith('/')) {
+      // Navigate to page
+      window.location.href = href;
+    } else {
+      // Scroll to section
+      const id = href.replace('#', '');
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    }
     setMobileOpen(false);
   };
 
