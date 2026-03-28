@@ -300,13 +300,12 @@ export const Hero: React.FC = () => {
         <motion.img
           src="./images/tiny-home-exterior.jpg"
           alt="Forged by Fire — Shou Sugi Ban Tiny Home Exterior"
-          className="w-full h-full object-cover grayscale opacity-50"
+          className="w-full h-full object-cover"
           style={{ scale: 1.1 }}
           animate={{ x: mousePos.x, y: mousePos.y }}
           transition={{ type: 'spring', stiffness: 30, damping: 20 }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/50 to-background z-10" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(217,119,6,0.08)_0,transparent_60%)] z-10" />
+        {/* Overlay removed to show full image clarity */}
       </motion.div>
 
       {/* Fire Canvas */}
