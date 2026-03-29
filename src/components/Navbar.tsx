@@ -78,7 +78,7 @@ export const Navbar: React.FC = () => {
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b',
           isScrolled
-            ? 'bg-background/90 backdrop-blur-md border-border/50 py-3'
+            ? 'bg-slate-900/80 backdrop-blur-xl border-orange-600/20 py-3 shadow-lg'
             : 'bg-transparent border-transparent py-5'
         )}
         initial={{ y: -80, opacity: 0 }}
@@ -94,7 +94,7 @@ export const Navbar: React.FC = () => {
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
             <motion.div
-              className="w-8 h-8 bg-primary rotate-45 flex items-center justify-center"
+              className="w-8 h-8 bg-orange-600 rotate-45 flex items-center justify-center rounded-sm"
               whileHover={{ rotate: 135 }}
               transition={{ duration: 0.5 }}
             >

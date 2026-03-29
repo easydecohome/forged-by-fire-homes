@@ -1,428 +1,302 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Button } from './ui/button';
-import { StatsBar } from './StatsBar';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Check, ChevronDown } from 'lucide-react';
 
-// Fire particle canvas
-const FireCanvas: React.FC = () => {
+// Eligibility Modal Component
+const EligibilityModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
+  const [formData, setFormData] = useState({ name: '', email: '', postcode: '' });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Lead captured:', formData);
+    setSubmitted(true);
+    setTimeout(() => {
+      onClose();
+      setSubmitted(false);
+      setFormData({ name: '', email: '', postcode: '' });
+    }, 2000);
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        className="bg-white rounded-xl p-8 max-w-md w-full shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {submitted ? (
+          <div className="text-center">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <Check className="w-8 h-8 text-green-600" />
+            </motion.div>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">Eligibility Check Submitted</h3>
+            <p className="text-gray-600">We'll review your site and send you a personalized report within 24 hours.</p>
+          </div>
+        ) : (
+          <>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">Check My Site Eligibility</h3>
+            <p className="text-gray-600 mb-6 text-sm">Enter your details and we'll verify if your land is suitable for a Forged by Fire home.</p>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <input
+                type="text"
+                placeholder="Your Name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-transparent outline-none transition"
+                required
+              />
+              <input
+                type="email"
+                placeholder="Email Address"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-transparent outline-none transition"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Postcode"
+                value={formData.postcode}
+                onChange={(e) => setFormData({ ...formData, postcode: e.target.value })}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-transparent outline-none transition"
+                required
+              />
+              <button
+                type="submit"
+                className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-lg transition-colors duration-300"
+              >
+                Check Eligibility
+              </button>
+            </form>
+          </>
+        )}
+      </motion.div>
+    </motion.div>
+  );
+};
+
+// Scroll Progress Bar
+const ScrollProgressBar: React.FC = () => {
+  const { scrollYProgress } = useScroll();
+  return (
+    <motion.div
+      className="fixed top-0 left-0 h-1 bg-gradient-to-r from-orange-600 to-orange-400 z-40"
+      style={{ width: useTransform(scrollYProgress, [0, 1], ['0%', '100%']) }}
+    />
+  );
+};
+
+// Particle Background
+const ParticleBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animId: number;
-    const resize = () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles: Array<{
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      size: number;
+      opacity: number;
+    }> = [];
+
+    for (let i = 0; i < 25; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        size: Math.random() * 2 + 0.5,
+        opacity: Math.random() * 0.4 + 0.1,
+      });
+    }
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+
+        ctx.globalAlpha = p.opacity;
+        ctx.fillStyle = '#B45F06';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
-    resize();
-    window.addEventListener('resize', resize);
 
-    interface Particle {
-      x: number; y: number; vx: number; vy: number;
-      life: number; maxLife: number; size: number;
-    }
-
-    const particles: Particle[] = [];
-    const MAX = 80;
-
-    const spawn = () => {
-      const x = Math.random() * canvas.width;
-      particles.push({
-        x,
-        y: canvas.height + 10,
-        vx: (Math.random() - 0.5) * 1.2,
-        vy: -(Math.random() * 2.5 + 1.5),
-        life: 0,
-        maxLife: Math.random() * 120 + 80,
-        size: Math.random() * 4 + 2,
-      });
-    };
-
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      while (particles.length < MAX) spawn();
-
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vx += (Math.random() - 0.5) * 0.15;
-        p.life++;
-
-        const progress = p.life / p.maxLife;
-        const alpha = Math.sin(progress * Math.PI) * 0.45;
-        const size = p.size * (1 - progress * 0.5);
-
-        const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, size * 3);
-        if (progress < 0.3) {
-          gradient.addColorStop(0, `rgba(255, 220, 100, ${alpha})`);
-          gradient.addColorStop(0.5, `rgba(230, 100, 20, ${alpha * 0.6})`);
-          gradient.addColorStop(1, 'rgba(0,0,0,0)');
-        } else if (progress < 0.7) {
-          gradient.addColorStop(0, `rgba(220, 80, 20, ${alpha})`);
-          gradient.addColorStop(0.5, `rgba(150, 30, 10, ${alpha * 0.5})`);
-          gradient.addColorStop(1, 'rgba(0,0,0,0)');
-        } else {
-          gradient.addColorStop(0, `rgba(80, 20, 5, ${alpha * 0.5})`);
-          gradient.addColorStop(1, 'rgba(0,0,0,0)');
-        }
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, size * 3, 0, Math.PI * 2);
-        ctx.fillStyle = gradient;
-        ctx.fill();
-
-        if (p.life >= p.maxLife) particles.splice(i, 1);
-      }
-
-      animId = requestAnimationFrame(draw);
-    };
-
-    draw();
-    return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener('resize', resize);
-    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 z-[5] pointer-events-none"
-      style={{ mixBlendMode: 'screen' }}
-    />
-  );
-};
-
-// Animated headline word-by-word — updated copy per brief
-const AnimatedHeadline: React.FC = () => {
-  const words = [
-    { text: 'Luxury', fire: false },
-    { text: 'Tiny', fire: false },
-    { text: 'Homes.', fire: true },
-    { text: '\n', fire: false },
-    { text: 'Council-Approved.', fire: false },
-    { text: '\n', fire: false },
-    { text: 'Delivered', fire: false },
-    { text: 'Australia-Wide', fire: false },
-    { text: 'in', fire: false },
-    { text: '16', fire: true },
-    { text: 'Weeks.', fire: false },
-  ];
-
-  const container = {
-    hidden: {},
-    show: { transition: { staggerChildren: 0.1, delayChildren: 0.4 } },
-  };
-  const wordAnim = {
-    hidden: { opacity: 0, y: 60 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
-  };
-
-  const lines: Array<Array<{ text: string; fire: boolean }>> = [[], [], []];
-  let lineIdx = 0;
-  words.forEach(w => {
-    if (w.text === '\n') { lineIdx++; }
-    else { lines[lineIdx].push(w); }
-  });
-
-  return (
-    <motion.h1
-      variants={container}
-      initial="hidden"
-      animate="show"
-      className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-foreground tracking-tight leading-[0.9] mb-8 max-w-5xl"
-    >
-      {lines.map((line, li) => (
-        <span key={li} className="block">
-          {line.map((w, wi) => (
-            <motion.span
-              key={wi}
-              variants={wordAnim}
-              className={`inline-block mr-[0.25em] ${w.fire ? 'hero-shimmer-text italic' : ''}`}
-            >
-              {w.text}
-            </motion.span>
-          ))}
-        </span>
-      ))}
-    </motion.h1>
-  );
-};
-
-// Floating ember dot
-const EmberDot: React.FC<{ delay: number; x: number }> = ({ delay, x }) => (
-  <motion.div
-    className="absolute bottom-0 rounded-full bg-primary/70"
-    style={{ left: `${x}%`, width: 3, height: 3 }}
-    animate={{
-      y: [0, -400],
-      x: [0, (x - 50) * 0.4],
-      opacity: [0, 0.9, 0],
-      scale: [0.5, 1.5, 0.2],
-    }}
-    transition={{
-      duration: 4 + Math.random() * 3,
-      delay,
-      repeat: Infinity,
-      ease: 'easeOut',
-    }}
-  />
-);
-
-// Scroll progress bar
-const ScrollProgressBar: React.FC = () => {
-  const { scrollYProgress } = useScroll();
-  return <motion.div className="scroll-progress" style={{ scaleX: scrollYProgress }} />;
-};
-
-// Cursor glow
-const CursorGlow: React.FC = () => {
-  const [pos, setPos] = useState({ x: -500, y: -500 });
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const move = (e: MouseEvent) => { setPos({ x: e.clientX, y: e.clientY }); setVisible(true); };
-    const leave = () => setVisible(false);
-    window.addEventListener('mousemove', move);
-    window.addEventListener('mouseleave', leave);
-    return () => { window.removeEventListener('mousemove', move); window.removeEventListener('mouseleave', leave); };
-  }, []);
-  return <div className="cursor-glow" style={{ left: pos.x, top: pos.y, opacity: visible ? 1 : 0 }} />;
-};
-
-// Floating badge tags
-const FloatingBadges: React.FC = () => {
-  const badges = [
-    { text: 'Shou Sugi Ban', delay: 0, x: '8%', y: '30%' },
-    { text: 'Australian Built', delay: 1.5, x: '85%', y: '25%' },
-    { text: '75yr+ Longevity', delay: 3, x: '12%', y: '65%' },
-    { text: 'Net-Zero Ready', delay: 2, x: '80%', y: '60%' },
-  ];
-  return (
-    <>
-      {badges.map((b, i) => (
-        <motion.div key={i}
-          className="absolute hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-background/40 backdrop-blur-sm text-[10px] uppercase tracking-widest font-bold text-primary/70 z-20 pointer-events-none"
-          style={{ left: b.x, top: b.y }}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: [0, 0.8, 0.8, 0], scale: [0.8, 1, 1, 0.8], y: [0, -8, -8, -16] }}
-          transition={{ duration: 5, delay: b.delay, repeat: Infinity, repeatDelay: 3, ease: 'easeInOut' }}
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-          {b.text}
-        </motion.div>
-      ))}
-    </>
-  );
-};
-
-// Sticky "Explore Models" CTA button — appears after scrolling past hero
-const StickyExploreCTA: React.FC = () => {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Show after scrolling 80% of viewport height
-      setVisible(window.scrollY > window.innerHeight * 0.8);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToModels = () => {
-    document.getElementById('ourwork')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  return (
-    <AnimatePresence>
-      {visible && (
-        <motion.div
-          className="fixed top-20 right-6 z-[60] hidden md:block"
-          initial={{ opacity: 0, x: 60 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 60 }}
-          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <motion.button
-            onClick={scrollToModels}
-            className="flex items-center gap-2 px-5 py-3 bg-primary text-white font-serif font-bold text-sm rounded-xl fire-glow shadow-2xl border border-primary/30"
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
-              <path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            Explore Models
-          </motion.button>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
+  return <canvas ref={canvasRef} className="absolute inset-0 opacity-20" />;
 };
 
 export const Hero: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] });
-  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
-  const textY = useTransform(scrollYProgress, [0, 1], ['0%', '15%']);
-  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end start'],
+  });
 
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
+  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
-  useEffect(() => {
-    const handleMouse = (e: MouseEvent) => {
-      setMousePos({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 10,
-      });
-    };
-    window.addEventListener('mousemove', handleMouse);
-    return () => window.removeEventListener('mousemove', handleMouse);
-  }, []);
-
-  const embers = Array.from({ length: 14 }, (_, i) => ({
-    delay: i * 0.35,
-    x: 3 + i * 7,
-  }));
+  const [eligibilityOpen, setEligibilityOpen] = useState(false);
 
   return (
     <>
       <ScrollProgressBar />
-      <CursorGlow />
-      <StickyExploreCTA />
-    <section ref={sectionRef} className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden">
-      {/* Parallax Background */}
-      <motion.div className="absolute inset-0 z-0" style={{ y: bgY }}>
-        <motion.img
-          src="./images/tiny-home-exterior.jpg"
-          alt="Forged by Fire — Shou Sugi Ban Tiny Home Exterior"
-          className="w-full h-full object-cover"
-          style={{ scale: 1.1 }}
-          animate={{ x: mousePos.x, y: mousePos.y }}
-          transition={{ type: 'spring', stiffness: 30, damping: 20 }}
-        />
-        {/* Overlay removed to show full image clarity */}
-      </motion.div>
+      <EligibilityModal isOpen={eligibilityOpen} onClose={() => setEligibilityOpen(false)} />
 
-      {/* Fire Canvas */}
-      <FireCanvas />
-
-      {/* Floating embers */}
-      <div className="absolute inset-0 z-[6] pointer-events-none overflow-hidden">
-        {embers.map((e, i) => (
-          <EmberDot key={i} delay={e.delay} x={e.x} />
-        ))}
-      </div>
-
-      {/* Floating Badges */}
-      <FloatingBadges />
-
-      {/* Content */}
-      <motion.div
-        className="container mx-auto px-6 relative z-20 pt-20 flex flex-col items-center text-center"
-        style={{ y: textY, opacity }}
+      <section
+        ref={sectionRef}
+        className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900"
       >
-        {/* Badge */}
+        {/* Background Image with Parallax */}
         <motion.div
-          className="inline-flex items-center gap-3 mb-8"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          className="absolute inset-0 z-0"
+          style={{ y: bgY }}
         >
-          <motion.div
-            className="h-[1px] bg-primary"
-            initial={{ width: 0 }}
-            animate={{ width: 32 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: 'url(/forged-by-fire-homes/images/tiny-home-exterior.jpg)',
+              backgroundPosition: 'center 40%',
+            }}
           />
-          <span className="text-primary tracking-widest uppercase text-xs font-bold leading-none">
-            Crafted in Australia
-          </span>
-          <motion.div
-            className="h-[1px] bg-primary"
-            initial={{ width: 0 }}
-            animate={{ width: 32 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-          />
+          {/* Dark overlay for text contrast */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60" />
         </motion.div>
 
-        {/* Animated Headline */}
-        <AnimatedHeadline />
+        {/* Particle Background */}
+        <ParticleBackground />
 
-        {/* Subtitle */}
-        <motion.p
-          className="text-lg md:text-xl text-foreground/70 max-w-2xl font-sans mb-12 leading-relaxed"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-        >
-          Escape the mortgage trap. Stop paying rent. Start earning Airbnb income. Our Shou Sugi Ban tiny homes are delivered turnkey in 16 weeks — off-grid ready, council-approved, and built to last 75 years.
-        </motion.p>
-
-        {/* CTAs */}
+        {/* Content Container */}
         <motion.div
-          className="flex flex-col sm:flex-row items-center gap-6 mb-20"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.5 }}
+          style={{ opacity }}
+          className="relative z-10 container mx-auto px-6 py-20 flex flex-col items-center justify-center h-full text-center"
         >
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-            <Button
-              size="lg"
-              className="px-10 py-7 text-lg bg-primary hover:bg-primary/90 text-white border-none transition-all duration-500 fire-glow relative overflow-hidden"
-              onClick={() => document.getElementById('ourwork')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              View Our Sanctuaries
-            </Button>
+          {/* Main Headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.2 }}
+            className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight max-w-4xl"
+          >
+            Engineered for Australia.
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600">
+              Forged for Life.
+            </span>
+          </motion.h1>
+
+          {/* Sub-headline */}
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.4 }}
+            className="text-lg md:text-xl text-gray-100 max-w-3xl mb-10 leading-relaxed"
+          >
+            Council-ready, steel-framed tiny homes built to withstand the elements. Fully insulated, BAL-rated, and delivered nationwide.
+          </motion.p>
+
+          {/* Trust Indicators */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.6 }}
+            className="flex flex-col md:flex-row gap-6 md:gap-10 mb-12 justify-center items-center"
+          >
+            {[
+              { icon: '✓', text: 'NHVR Compliant' },
+              { icon: '✓', text: 'Termite-Proof Steel' },
+              { icon: '✓', text: 'Finance Ready' },
+            ].map((indicator, idx) => (
+              <div key={idx} className="flex items-center gap-3 text-white">
+                <div className="w-6 h-6 rounded-full bg-orange-600 flex items-center justify-center text-sm font-bold flex-shrink-0">
+                  {indicator.icon}
+                </div>
+                <span className="text-sm md:text-base font-semibold">{indicator.text}</span>
+              </div>
+            ))}
           </motion.div>
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-            <Button
-              size="lg"
-              variant="outline"
-              className="px-10 py-7 text-lg border-white/20 text-white hover:bg-white/10 backdrop-blur-sm transition-all duration-500 flex items-center gap-2"
-              onClick={() => document.getElementById('ourwork')?.scrollIntoView({ behavior: 'smooth' })}
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.8 }}
+            className="flex flex-col sm:flex-row gap-4 md:gap-6 mb-12"
+          >
+            {/* Primary Button */}
+            <motion.button
+              whileHover={{ scale: 1.05, boxShadow: '0 25px 50px rgba(180, 95, 6, 0.4)' }}
+              whileTap={{ scale: 0.95 }}
+              className="px-8 md:px-12 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition-all duration-300 shadow-lg text-base md:text-lg"
             >
-              Explore Models
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </Button>
+              Explore 2026 Models
+            </motion.button>
+
+            {/* Secondary Button */}
+            <motion.button
+              whileHover={{ scale: 1.05, borderColor: '#B45F06', backgroundColor: 'rgba(255,255,255,0.1)' }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setEligibilityOpen(true)}
+              className="px-8 md:px-12 py-4 border-2 border-white text-white font-bold rounded-lg hover:bg-white/5 transition-all duration-300 text-base md:text-lg"
+            >
+              Check My Site Eligibility
+            </motion.button>
+          </motion.div>
+
+          {/* Scroll Indicator */}
+          <motion.div
+            animate={{ y: [0, 12, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity }}
+            className="mt-8"
+          >
+            <ChevronDown className="w-8 h-8 text-white opacity-60" />
           </motion.div>
         </motion.div>
-      </motion.div>
-
-      {/* Stats Bar */}
-      <motion.div
-        className="w-full max-w-6xl mx-auto px-6 mb-12 relative z-20"
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.9, delay: 1.8 }}
-      >
-        <StatsBar />
-      </motion.div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.5, duration: 1 }}
-      >
-        <span className="text-[10px] uppercase tracking-[0.3em] text-foreground/30 font-sans font-bold">Scroll</span>
-        <motion.div
-          className="w-[1px] h-12 bg-gradient-to-b from-primary/60 to-transparent"
-          animate={{ scaleY: [0, 1, 0], originY: 0 }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-        />
-      </motion.div>
-
-      {/* Bottom fire line */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-    </section>
+      </section>
     </>
   );
 };
