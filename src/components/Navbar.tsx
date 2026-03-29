@@ -38,8 +38,10 @@ export const Navbar: React.FC = () => {
 
   const scrollTo = (href: string) => {
     if (href.startsWith('/')) {
-      // Navigate to page
-      window.location.href = href;
+      // Trigger link click to use interceptor
+      const link = document.createElement('a');
+      link.href = href;
+      link.click();
     } else {
       // Scroll to section
       const id = href.replace('#', '');

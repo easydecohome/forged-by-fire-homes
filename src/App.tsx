@@ -1,14 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Models } from './components/Models';
-// import { Craft } from './components/Craft';
-  // import { ShousugiBanStory } from './components/ShousugiBanStory';
-  // import { Process } from './components/Process';
 import { SocialProof } from './components/SocialProof';
-// import { ROICalculator } from './components/ROICalculator';
-  // import { Pricing } from './components/Pricing';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { FeaturesPage } from './pages/FeaturesPage';
@@ -17,33 +12,39 @@ import UrgencyBanner from './components/UrgencyBanner';
 import { NewsletterModal } from './components/NewsletterModal';
 import { SolutionSection } from './components/SolutionSection';
 import { LifestyleTransform } from './components/LifestyleTransform';
-  import { FloorPlanExplorer } from './components/FloorPlanExplorer';
-  import { TrustStrip } from './components/TrustStrip';
-  // import { CouncilApprovalRoadmap } from './components/CouncilApprovalRoadmap';
-  // import { TotalCostBreakdown } from './components/TotalCostBreakdown';
-  // import { DeliveryMap } from './components/DeliveryMap';
-// import { EnvironmentalSection } from './components/EnvironmentalSection';
+import { FloorPlanExplorer } from './components/FloorPlanExplorer';
+import { TrustStrip } from './components/TrustStrip';
 import { FinanceOptions } from './components/FinanceOptions';
-// import { MeetTheTeam } from './components/MeetTheTeam';
-  // import { ClientMap } from './components/ClientMap';
 import { ShousugiBanHistoryPage } from './pages/ShousugiBanHistoryPage';
 import { SpecificationsPage } from './pages/SpecificationsPage';
 import { ProcessPage } from './pages/ProcessPage';
 import { ShouSugiBanPage } from './pages/ShouSugiBanPage';
 import { InvestmentPage } from './pages/InvestmentPage';
 
-// Simple client-side router
+// GitHub Pages base path
+const BASE_PATH = '/forged-by-fire-homes';
+
+// Normalize path by removing base path
+function normalizePath(pathname: string): string {
+  if (pathname.startsWith(BASE_PATH)) {
+    return pathname.slice(BASE_PATH.length) || '/';
+  }
+  return pathname || '/';
+}
+
+// Simple client-side router with GitHub Pages support
 function useRoute() {
-  const [path, setPath] = useState(() => window.location.pathname);
+  const [path, setPath] = useState(() => normalizePath(window.location.pathname));
 
   useEffect(() => {
-    const onPop = () => setPath(window.location.pathname);
+    const onPop = () => setPath(normalizePath(window.location.pathname));
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
 
   const navigate = (to: string) => {
-    window.history.pushState({}, '', to);
+    const fullPath = BASE_PATH + to;
+    window.history.pushState({}, '', fullPath);
     setPath(to);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -51,7 +52,7 @@ function useRoute() {
   return { path, navigate };
 }
 
-// Intercept <a href="/features"> clicks
+// Intercept internal links
 function useLinkInterceptor(navigate: (to: string) => void) {
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -99,13 +100,15 @@ function App() {
   const { path, navigate } = useRoute();
   useLinkInterceptor(navigate);
 
-  const isFeatures = path === '/features' || path.includes('/features');
-  const isProduct = path === '/product' || path.includes('/product');
-  const isShousugiBanHistory = path === '/shou-sugi-ban-history' || path.includes('/shou-sugi-ban-history');
-  const isSpecifications = path === '/specifications' || path.includes('/specifications');
-  const isProcess = path === '/process' || path.includes('/process');
-  const isShouSugiBan = path === '/shou-sugi-ban' || path.includes('/shou-sugi-ban');
-  const isInvestment = path === '/investment' || path.includes('/investment');
+  // Normalize path checks
+  const isHome = path === '/' || path === '';
+  const isSpecifications = path === '/specifications';
+  const isProcess = path === '/process';
+  const isShouSugiBan = path === '/shou-sugi-ban';
+  const isInvestment = path === '/investment';
+  const isShousugiBanHistory = path === '/shou-sugi-ban-history';
+  const isProduct = path === '/product';
+  const isFeatures = path === '/features';
 
   return (
     <AnimatePresence mode="wait">

@@ -67,7 +67,15 @@ export const Footer: React.FC = () => {
               ].map((item) => (
                 <li key={item.label}>
                   <motion.button
-                    onClick={() => item.isPage ? window.location.href = item.href : scrollTo(item.href.replace('#', ''))}
+                    onClick={() => {
+                      if (item.isPage) {
+                        const link = document.createElement('a');
+                        link.href = item.href;
+                        link.click();
+                      } else {
+                        scrollTo(item.href.replace('#', ''));
+                      }
+                    }}
                     className="text-sm font-medium text-foreground/50 hover:text-primary transition-colors italic tracking-wide font-sans"
                     whileHover={{ x: 4 }}
                     transition={{ type: 'spring', stiffness: 300 }}
