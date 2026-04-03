@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import SiteEligibilityModal from './components/SiteEligibilityModal';
 import { Models } from './components/Models';
 import { SocialProof } from './components/SocialProof';
 import { Contact } from './components/Contact';
@@ -70,6 +71,9 @@ function useLinkInterceptor(navigate: (to: string) => void) {
 }
 
 function HomePage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
   const [newsletterOpen, setNewsletterOpen] = useState(false);
   useEffect(() => {
     const timer = setTimeout(() => setNewsletterOpen(true), 30000);
@@ -80,7 +84,7 @@ function HomePage() {
       <UrgencyBanner />
       <NewsletterModal open={newsletterOpen} onOpenChange={setNewsletterOpen} />
       <Navbar />
-      <Hero />
+      <Hero openSiteEligibilityModal={openModal} />
       <TrustStrip />
       <SolutionSection />
       <Models />
@@ -92,6 +96,7 @@ function HomePage() {
       {/* Global Background Glow Accents */}
       <div className="fixed top-0 left-0 w-[512px] h-[512px] bg-primary/5 blur-[128px] rounded-full -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none" />
       <div className="fixed bottom-0 right-0 w-[512px] h-[512px] bg-primary/5 blur-[128px] rounded-full translate-x-1/2 translate-y-1/2 z-0 pointer-events-none" />
+          <SiteEligibilityModal isOpen={isModalOpen} onClose={closeModal} />
     </main>
   );
 }

@@ -1,93 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Check, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
+import TrustIndicators from './TrustIndicators';
 
-// Eligibility Modal Component
-const EligibilityModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
-  const [formData, setFormData] = useState({ name: '', email: '', postcode: '' });
-  const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Lead captured:', formData);
-    setSubmitted(true);
-    setTimeout(() => {
-      onClose();
-      setSubmitted(false);
-      setFormData({ name: '', email: '', postcode: '' });
-    }, 2000);
-  };
-
-  if (!isOpen) return null;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center p-4"
-      onClick={onClose}
-    >
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        className="bg-white rounded-xl p-8 max-w-md w-full shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {submitted ? (
-          <div className="text-center">
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"
-            >
-              <Check className="w-8 h-8 text-green-600" />
-            </motion.div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Eligibility Check Submitted</h3>
-            <p className="text-gray-600">We'll review your site and send you a personalized report within 24 hours.</p>
-          </div>
-        ) : (
-          <>
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">Check My Site Eligibility</h3>
-            <p className="text-gray-600 mb-6 text-sm">Enter your details and we'll verify if your land is suitable for a Forged by Fire home.</p>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <input
-                type="text"
-                placeholder="Your Name"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-transparent outline-none transition"
-                required
-              />
-              <input
-                type="email"
-                placeholder="Email Address"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-transparent outline-none transition"
-                required
-              />
-              <input
-                type="text"
-                placeholder="Postcode"
-                value={formData.postcode}
-                onChange={(e) => setFormData({ ...formData, postcode: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-transparent outline-none transition"
-                required
-              />
-              <button
-                type="submit"
-                className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-lg transition-colors duration-300"
-              >
-                Check Eligibility
-              </button>
-            </form>
-          </>
-        )}
-      </motion.div>
-    </motion.div>
-  );
-};
 
 // Scroll Progress Bar
 const ScrollProgressBar: React.FC = () => {
@@ -170,7 +86,11 @@ const ParticleBackground: React.FC = () => {
   return <canvas ref={canvasRef} className="absolute inset-0 opacity-20" />;
 };
 
-export const Hero: React.FC = () => {
+interface HeroProps {
+  openSiteEligibilityModal: () => void;
+}
+
+export const Hero: React.FC<HeroProps> = ({ openSiteEligibilityModal }) => {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -180,12 +100,12 @@ export const Hero: React.FC = () => {
   const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
   const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
-  const [eligibilityOpen, setEligibilityOpen] = useState(false);
+  
 
   return (
     <>
       <ScrollProgressBar />
-      <EligibilityModal isOpen={eligibilityOpen} onClose={() => setEligibilityOpen(false)} />
+      
 
       <section
         ref={sectionRef}
@@ -222,7 +142,7 @@ export const Hero: React.FC = () => {
             transition={{ duration: 0.9, delay: 0.2 }}
             className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight max-w-4xl"
           >
-            Engineered for Australia.
+            Your Australian Dream,
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600">
               Forged for Life.
@@ -236,7 +156,7 @@ export const Hero: React.FC = () => {
             transition={{ duration: 0.9, delay: 0.4 }}
             className="text-lg md:text-xl text-gray-100 max-w-3xl mb-10 leading-relaxed"
           >
-            Council-ready, steel-framed tiny homes built to withstand the elements. Fully insulated, BAL-rated, and delivered nationwide.
+            Experience unparalleled durability and peace of mind with our council-ready, steel-framed, BAL-rated tiny homes, designed to thrive in Australia's toughest conditions and delivered nationwide.
           </motion.p>
 
           {/* Trust Indicators */}
@@ -244,20 +164,9 @@ export const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.6 }}
-            className="flex flex-col md:flex-row gap-6 md:gap-10 mb-12 justify-center items-center"
+            className="mb-12"
           >
-            {[
-              { icon: '✓', text: 'NHVR Compliant' },
-              { icon: '✓', text: 'Termite-Proof Steel' },
-              { icon: '✓', text: 'Finance Ready' },
-            ].map((indicator, idx) => (
-              <div key={idx} className="flex items-center gap-3 text-white">
-                <div className="w-6 h-6 rounded-full bg-orange-600 flex items-center justify-center text-sm font-bold flex-shrink-0">
-                  {indicator.icon}
-                </div>
-                <span className="text-sm md:text-base font-semibold">{indicator.text}</span>
-              </div>
-            ))}
+            <TrustIndicators />
           </motion.div>
 
           {/* CTA Buttons */}
@@ -273,17 +182,17 @@ export const Hero: React.FC = () => {
               whileTap={{ scale: 0.95 }}
               className="px-8 md:px-12 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition-all duration-300 shadow-lg text-base md:text-lg"
             >
-              Explore 2026 Models
+              Design Your Lifestyle
             </motion.button>
 
             {/* Secondary Button */}
             <motion.button
               whileHover={{ scale: 1.05, borderColor: '#B45F06', backgroundColor: 'rgba(255,255,255,0.1)' }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => setEligibilityOpen(true)}
+              onClick={openSiteEligibilityModal}
               className="px-8 md:px-12 py-4 border-2 border-white text-white font-bold rounded-lg hover:bg-white/5 transition-all duration-300 text-base md:text-lg"
             >
-              Check My Site Eligibility
+              Get My Free Site Report
             </motion.button>
           </motion.div>
 
