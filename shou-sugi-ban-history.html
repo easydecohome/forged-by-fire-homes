@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The History of Shou Sugi Ban — Forged by Fire Homes</title>
+  <meta name="description" content="Explore the 400-year history of Shou Sugi Ban — from ancient Japan to modern Australian luxury architecture. The complete story of fire-charred timber." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: hsl(214,12%,15%); --bg-card: hsl(214,12%,18%); --bg-muted: hsl(214,10%,22%);
+      --fg: hsl(30,11%,96%); --fg-muted: hsl(30,8%,60%); --primary: hsl(24,78%,40%);
+      --primary-light: hsl(38,92%,50%); --border: hsl(17,10%,22%); --radius: 6px;
+      --font-sans: 'DM Sans', sans-serif; --font-serif: 'Playfair Display', serif;
+      --gradient-fire: linear-gradient(135deg, hsl(21,91%,41%), hsl(38,92%,50%));
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--fg); font-family: var(--font-sans); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+    h1,h2,h3,h4 { font-family: var(--font-serif); line-height: 1.2; }
+    .fire-text { background: var(--gradient-fire); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: var(--radius); font-size: 14px; font-weight: 500; transition: all 0.2s; border: none; }
+    .btn-primary { background: var(--gradient-fire); color: #fff; }
+    .btn-primary:hover { opacity: 0.9; }
+    .btn-outline { background: transparent; color: var(--fg); border: 1px solid var(--border); }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* NAV */
+    nav { background: hsl(214,12%,10%); border-bottom: 1px solid var(--border); padding: 16px 0; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-family: var(--font-serif); font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+
+    /* HERO */
+    .page-hero { padding: 80px 0 60px; border-bottom: 1px solid var(--border); }
+    .page-hero .breadcrumb { font-size: 13px; color: var(--fg-muted); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+    .page-hero .breadcrumb a { color: var(--primary-light); }
+    .page-hero .breadcrumb span { color: var(--fg-muted); }
+    .page-hero h1 { font-size: clamp(32px,5vw,56px); margin-bottom: 16px; }
+    .page-hero p { font-size: 18px; color: var(--fg-muted); max-width: 640px; }
+
+    /* TIMELINE */
+    .timeline { padding: 60px 0; }
+    .timeline-item { display: grid; grid-template-columns: 120px 1fr; gap: 32px; margin-bottom: 56px; position: relative; }
+    .timeline-item::before { content: ''; position: absolute; left: 60px; top: 48px; bottom: -56px; width: 2px; background: var(--border); }
+    .timeline-item:last-child::before { display: none; }
+    .timeline-date { text-align: right; padding-top: 4px; }
+    .timeline-era { font-family: var(--font-serif); font-size: 22px; font-weight: 700; color: var(--primary-light); line-height: 1; }
+    .timeline-period { font-size: 12px; color: var(--fg-muted); margin-top: 4px; }
+    .timeline-dot { position: absolute; left: 52px; top: 8px; width: 18px; height: 18px; border-radius: 50%; background: var(--gradient-fire); border: 2px solid var(--bg); }
+    .timeline-content { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; }
+    .timeline-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .timeline-subtitle { font-size: 13px; color: var(--primary-light); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; }
+    .timeline-text { font-size: 15px; color: var(--fg-muted); line-height: 1.8; }
+    .timeline-note { margin-top: 14px; padding: 12px 16px; background: hsla(24,78%,40%,0.08); border-left: 3px solid var(--primary); border-radius: 0 var(--radius) var(--radius) 0; font-size: 13px; color: var(--fg-muted); font-style: italic; }
+
+    /* TECHNIQUE */
+    .technique-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 40px 0; }
+    .technique-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+    .technique-num { font-family: var(--font-serif); font-size: 36px; font-weight: 700; color: hsla(24,78%,40%,0.3); margin-bottom: 8px; }
+    .technique-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+    .technique-text { font-size: 13px; color: var(--fg-muted); line-height: 1.7; }
+
+    /* CTA */
+    .page-cta { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px; text-align: center; margin: 60px 0; }
+    .page-cta h2 { font-size: 28px; margin-bottom: 12px; }
+    .page-cta p { color: var(--fg-muted); margin-bottom: 24px; }
+    .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* FOOTER */
+    .page-footer { background: hsl(214,12%,10%); border-top: 1px solid var(--border); padding: 24px 0; text-align: center; font-size: 13px; color: var(--fg-muted); }
+
+    @media (max-width: 640px) {
+      .timeline-item { grid-template-columns: 1fr; }
+      .timeline-item::before { display: none; }
+      .timeline-dot { display: none; }
+      .timeline-date { text-align: left; }
+      .technique-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="./index.html" class="nav-logo">
+        <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+          <path d="M14 2L4 10v14h6v-8h8v8h6V10L14 2z" fill="hsl(24,78%,40%)" opacity="0.3"/>
+          <path d="M14 2L4 10v14h6v-8h8v8h6V10L14 2z" stroke="hsl(38,92%,50%)" stroke-width="1.5" fill="none"/>
+        </svg>
+        Forged by Fire
+      </a>
+      <a href="./index.html" class="btn btn-outline" style="font-size:13px; padding:8px 16px;">&#8592; Back to Site</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="./index.html">Home</a>
+      <span>/</span>
+      <span>Shou Sugi Ban History</span>
+    </div>
+    <h1>The Ancient Art of <span class="fire-text">Shou Sugi Ban</span></h1>
+    <p>A 400-year journey from Edo-period Japan to the world's most prestigious architectural projects &mdash; and to the hills of Australia.</p>
+  </div>
+</div>
+
+<div class="timeline">
+  <div class="container">
+
+    <div class="timeline-item">
+      <div class="timeline-date">
+        <div class="timeline-era">1600s</div>
+        <div class="timeline-period">Edo Period</div>
+      </div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-subtitle">Ancient Origins</div>
+        <div class="timeline-title">Born in the Forests of Japan</div>
+        <p class="timeline-text">Shou Sugi Ban (&#30053;&#26449;&#30053;&#26495;, literally "burnt cedar board") emerged in the Edo period of Japan as a practical solution to the challenges of building in a humid, fire-prone island nation. Japanese craftsmen discovered that charring the surface of cedar timber created a protective layer that was simultaneously fire-resistant, insect-repellent, and waterproof.</p>
+        <p class="timeline-text" style="margin-top:12px;">The technique was initially developed in the Kinki region (modern-day Osaka and Hyogo prefectures), where cedar forests were abundant and the humid coastal climate demanded durable building materials. Early practitioners would char three planks simultaneously in a triangular formation, creating a natural chimney effect that produced an even, deep char.</p>
+        <div class="timeline-note">"The fire does not destroy the wood &mdash; it preserves it. The char is not damage; it is armour." &mdash; Traditional Japanese craftsman's saying</div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">
+        <div class="timeline-era">1700s</div>
+        <div class="timeline-period">Refinement</div>
+      </div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-subtitle">Refinement &amp; Mastery</div>
+        <div class="timeline-title">The Craft Reaches Perfection</div>
+        <p class="timeline-text">Through the 18th century, Shou Sugi Ban evolved from a purely functional technique into a refined craft. Master carpenters (daiku) developed precise methods for controlling char depth &mdash; distinguishing between a light surface char for aesthetic effect, a medium char for weather resistance, and a deep char for maximum durability in coastal and high-rainfall environments.</p>
+        <p class="timeline-text" style="margin-top:12px;">The finishing process became equally important: after charring, craftsmen would brush the surface with wire brushes to remove loose carbon, then apply natural oils (typically tung oil or linseed oil) to seal the char and bring out the dramatic texture. This three-stage process &mdash; char, brush, oil &mdash; remains the gold standard today.</p>
+        <div class="timeline-note">Three char depths were codified: <strong>Shou</strong> (light, 1&ndash;2mm), <strong>Goma</strong> (medium, 2&ndash;3mm), and <strong>Noshi</strong> (deep, 3mm+). Each serves a different purpose and creates a distinct aesthetic.</div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">
+        <div class="timeline-era">1800s</div>
+        <div class="timeline-period">Expansion</div>
+      </div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-subtitle">Coastal Architecture</div>
+        <div class="timeline-title">The Technique Spreads Across Japan</div>
+        <p class="timeline-text">During the Meiji Restoration and subsequent modernisation of Japan, Shou Sugi Ban spread from its origins in the Kinki region to coastal fishing villages across the country. The technique proved especially valuable in seaside communities where salt air and moisture accelerated the decay of untreated timber.</p>
+        <p class="timeline-text" style="margin-top:12px;">The iconic black-clad fishing villages of Naoshima Island and the Uchiko district of Ehime Prefecture became celebrated examples of the technique at scale. Entire streetscapes of charred timber buildings created a distinctive visual identity that would later inspire architects worldwide.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">
+        <div class="timeline-era">1950s</div>
+        <div class="timeline-period">Post-War</div>
+      </div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-subtitle">Post-War Revival</div>
+        <div class="timeline-title">Reconstruction and Rediscovery</div>
+        <p class="timeline-text">Following World War II, Japan's rapid reconstruction initially favoured concrete and steel over traditional timber techniques. Shou Sugi Ban fell out of mainstream use as Western building methods dominated. However, a small community of traditional craftsmen in rural Japan continued to practise and teach the technique, preserving the knowledge through apprenticeship.</p>
+        <p class="timeline-text" style="margin-top:12px;">The 1970s oil crisis sparked renewed interest in sustainable, low-maintenance building materials. Architects and designers began rediscovering traditional Japanese building techniques, and Shou Sugi Ban attracted attention for its extraordinary longevity &mdash; buildings clad in charred timber from the Edo period were still standing, while concrete structures built in the 1950s were already showing significant deterioration.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">
+        <div class="timeline-era">2000s</div>
+        <div class="timeline-period">Global</div>
+      </div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-subtitle">Global Recognition</div>
+        <div class="timeline-title">The World Discovers Shou Sugi Ban</div>
+        <p class="timeline-text">The early 2000s saw Shou Sugi Ban explode onto the global architectural stage. Kengo Kuma, the celebrated Japanese architect who would later design the Tokyo 2020 Olympic Stadium, championed the technique in his internationally acclaimed projects. His use of charred timber in the Chokkura Plaza (2006) in Tochigi Prefecture introduced the technique to a global audience of architects and designers.</p>
+        <p class="timeline-text" style="margin-top:12px;">European architects, particularly in Scandinavia and the UK, embraced Shou Sugi Ban as a sustainable alternative to pressure-treated timber. The technique appeared in prestigious projects across London, Copenhagen, and Oslo, winning multiple architectural awards and cementing its status as a material of choice for high-end sustainable design.</p>
+        <div class="timeline-note">By 2010, Shou Sugi Ban had been featured in over 200 architectural publications worldwide, and demand for skilled practitioners had outpaced supply in every major market.</div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">
+        <div class="timeline-era">2015+</div>
+        <div class="timeline-period">Australia</div>
+      </div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-subtitle">Australian Mastery</div>
+        <div class="timeline-title">Forged by Fire Brings the Craft Home</div>
+        <p class="timeline-text">Australia's unique climate &mdash; ranging from tropical Queensland to the temperate south &mdash; presented both challenges and opportunities for Shou Sugi Ban. The technique's natural fire resistance made it ideal for Australia's bushfire-prone regions, while its resistance to moisture and insects addressed the challenges of tropical and coastal environments.</p>
+        <p class="timeline-text" style="margin-top:12px;">Forged by Fire was established in Rockhampton, QLD in 2019 by Marcus Webb, who had spent two years studying traditional charring techniques in the Kinki region of Japan. Marcus adapted the traditional technique for Australian timbers and climate conditions, developing a proprietary process that achieves the same results as the traditional Japanese method while meeting Australian building codes and BAL fire ratings.</p>
+        <p class="timeline-text" style="margin-top:12px;">Today, Forged by Fire has delivered 84+ homes across Australia, each clad in authentic hand-charred Shou Sugi Ban timber. Our homes have been approved in 15+ council areas and have achieved some of the highest Airbnb ratings in Australia's short-stay accommodation market.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="container">
+  <h2 style="font-size:clamp(24px,4vw,36px); margin-bottom:8px;">The <span class="fire-text">Technique</span></h2>
+  <p style="color:var(--fg-muted); margin-bottom:32px;">How we char every board that clads a Forged by Fire home.</p>
+  <div class="technique-grid">
+    <div class="technique-card">
+      <div class="technique-num">01</div>
+      <div class="technique-title">Selection &amp; Preparation</div>
+      <p class="technique-text">We source sustainably harvested timber &mdash; primarily Japanese cedar (sugi) and Australian cypress pine &mdash; from certified suppliers. Each board is inspected for grain consistency, moisture content (target: 12&ndash;15%), and structural integrity before charring.</p>
+    </div>
+    <div class="technique-card">
+      <div class="technique-num">02</div>
+      <div class="technique-title">The Charring Process</div>
+      <p class="technique-text">Three boards are bound together in a triangular formation and ignited from below, creating a chimney effect that draws flame evenly across all surfaces. Char depth is controlled by timing: 1&ndash;2 minutes for light char, 3&ndash;4 minutes for medium, 5+ minutes for deep char. Our craftsmen monitor temperature and colour to achieve consistent results.</p>
+    </div>
+    <div class="technique-card">
+      <div class="technique-num">03</div>
+      <div class="technique-title">Brushing &amp; Cooling</div>
+      <p class="technique-text">After charring, boards are cooled with water and brushed with wire brushes to remove loose carbon and reveal the dramatic grain pattern beneath. This stage determines the final texture: heavy brushing creates a smooth, silvery surface; light brushing preserves the dramatic alligator-skin texture of the deep char.</p>
+    </div>
+    <div class="technique-card">
+      <div class="technique-num">04</div>
+      <div class="technique-title">Oiling &amp; Sealing</div>
+      <p class="technique-text">Each board receives two coats of natural oil &mdash; we use a blend of tung oil and linseed oil &mdash; which penetrates the char layer to seal it against moisture and UV degradation. This final stage locks in the colour, enhances the grain, and provides the 75&ndash;100 year service life that makes Shou Sugi Ban the most durable cladding available.</p>
+    </div>
+  </div>
+
+  <div class="page-cta">
+    <h2>Experience It <span class="fire-text">Yourself</span></h2>
+    <p>Every Forged by Fire home is clad in authentic hand-charred Shou Sugi Ban timber, crafted using the traditional three-stage technique. Commission your sanctuary today.</p>
+    <div class="cta-buttons">
+      <a href="./index.html#contact" class="btn btn-primary" style="font-size:15px; padding:14px 28px;">Commission a Home &#8594;</a>
+      <a href="./index.html#models" class="btn btn-outline" style="font-size:15px; padding:14px 28px;">Explore Our Models</a>
+    </div>
+  </div>
+</div>
+
+<div class="page-footer">
+  <div class="container">
+    <p>&copy; 2026 Forged by Fire Homes. <a href="./index.html" style="color:var(--primary-light);">Return to Main Site</a></p>
+  </div>
+</div>
+
+</body>
+</html>
