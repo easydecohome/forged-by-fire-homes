@@ -142,10 +142,10 @@ export const Hero: React.FC<HeroProps> = ({ openSiteEligibilityModal }) => {
             transition={{ duration: 0.9, delay: 0.2 }}
             className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight max-w-4xl"
           >
-            Your Australian Dream,
+            A Better Way to Build.
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600">
-              Forged for Life.
+              Simplified.
             </span>
           </motion.h1>
 
@@ -156,7 +156,7 @@ export const Hero: React.FC<HeroProps> = ({ openSiteEligibilityModal }) => {
             transition={{ duration: 0.9, delay: 0.4 }}
             className="text-lg md:text-xl text-gray-100 max-w-3xl mb-10 leading-relaxed"
           >
-            Experience unparalleled durability and peace of mind with our council-ready, steel-framed, BAL-rated tiny homes, designed to thrive in Australia's toughest conditions and delivered nationwide.
+            Shou Sugi Ban cabins designed for luxury, sustainability, and precise construction. Built in Rockhampton, delivered across Queensland.
           </motion.p>
 
           {/* Trust Indicators */}
@@ -182,7 +182,7 @@ export const Hero: React.FC<HeroProps> = ({ openSiteEligibilityModal }) => {
               whileTap={{ scale: 0.95 }}
               className="px-8 md:px-12 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition-all duration-300 shadow-lg text-base md:text-lg"
             >
-              Design Your Lifestyle
+              Request a Quote
             </motion.button>
 
             {/* Secondary Button */}
@@ -192,7 +192,7 @@ export const Hero: React.FC<HeroProps> = ({ openSiteEligibilityModal }) => {
               onClick={openSiteEligibilityModal}
               className="px-8 md:px-12 py-4 border-2 border-white text-white font-bold rounded-lg hover:bg-white/5 transition-all duration-300 text-base md:text-lg"
             >
-              Get My Free Site Report
+              Explore Our Cabins
             </motion.button>
           </motion.div>
 

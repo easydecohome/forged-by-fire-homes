@@ -21,6 +21,8 @@ import { SpecificationsPage } from './pages/SpecificationsPage';
 import { ProcessPage } from './pages/ProcessPage';
 import { ShouSugiBanPage } from './pages/ShouSugiBanPage';
 import { InvestmentPage } from './pages/InvestmentPage';
+import { FeaturedProjects } from './components/FeaturedProjects';
+import { Services } from './components/Services';
 
 // GitHub Pages base path
 const BASE_PATH = '/forged-by-fire-homes';
@@ -86,6 +88,8 @@ function HomePage() {
       <Navbar />
       <Hero openSiteEligibilityModal={openModal} />
       <TrustStrip />
+      <FeaturedProjects />
+      <Services />
       <SolutionSection />
       <Models />
       <FloorPlanExplorer />
